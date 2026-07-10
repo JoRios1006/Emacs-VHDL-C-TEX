@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: fprintf to stderr
+# key: fprintf
+# --
+fprintf(stderr, "${1:Error: %s\n}", ${2:msg});$0

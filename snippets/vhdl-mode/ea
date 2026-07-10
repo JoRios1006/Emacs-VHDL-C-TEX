@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: entity + architecture
+# key: ea
+# --
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity ${1:entity_name} is
+    port (
+        clk   : in  std_logic;
+        rst   : in  std_logic;
+        $2
+    );
+end entity ${1:entity_name};
+
+architecture rtl of ${1:entity_name} is
+    $3
+begin
+    $0
+end architecture rtl;

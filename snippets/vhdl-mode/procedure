@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: procedure declaration
+# key: procedure
+# --
+procedure ${1:proc_name} (
+    ${2:arg1} : in  ${3:std_logic};
+    ${4:arg2} : out ${5:std_logic}
+) is
+    $6
+begin
+    $0
+end procedure ${1:proc_name};

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: \prod with limits
+# key: prod
+# --
+\prod_{${1:i=1}}^{${2:n}} ${3:a_i}$0

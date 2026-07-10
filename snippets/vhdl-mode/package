@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: package declaration
+# key: package
+# --
+package ${1:pkg_name} is
+    $0
+end package ${1:pkg_name};

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: FIXME comment
+# key: fixme
+# --
+/* FIXME: $1 */
+$0

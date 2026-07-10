@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: gather environment
+# key: gather
+# --
+\begin{gather*}
+    $0
+\end{gather*}

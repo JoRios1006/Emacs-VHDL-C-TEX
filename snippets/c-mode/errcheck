@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: error check + goto cleanup
+# key: errcheck
+# --
+${1:int} ${2:ret} = ${3:func}(${4:args});
+if (${2:ret} < 0) {
+    fprintf(stderr, "Error: %s\n", strerror(errno));
+    goto ${5:cleanup};
+}
+$0
+
+${5:cleanup}:
+    $6

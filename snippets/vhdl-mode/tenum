@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: enumeration type
+# key: tenum
+# --
+type ${1:state_t} is (${2:IDLE, ACTIVE, DONE});
+signal ${3:state} : ${1:state_t} := ${4:IDLE};
+$0

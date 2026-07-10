@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: \mathsf{}
+# key: ms
+# --
+\mathsf{${1:text}}$0

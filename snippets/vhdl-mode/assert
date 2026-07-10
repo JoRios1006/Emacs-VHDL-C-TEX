@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: assert statement
+# key: assert
+# --
+assert ${1:condition}
+    report "${2:Assertion failed}"
+    severity ${3:failure};
+$0

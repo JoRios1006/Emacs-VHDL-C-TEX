@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: function pointer typedef
+# key: ptrfunc
+# --
+typedef ${1:void} (*${2:callback}_t)(${3:void *arg});
+$0

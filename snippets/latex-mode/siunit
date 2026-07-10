@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: siunitx \SI{}{}
+# key: siunit
+# --
+\SI{${1:value}}{${2:\metre\per\second}}$0

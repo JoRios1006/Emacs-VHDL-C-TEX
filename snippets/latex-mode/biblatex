@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: biblatex setup
+# key: biblatex
+# --
+\usepackage[backend=biber, style=${1:authoryear}]{biblatex}
+\addbibresource{${2:references.bib}}
+$0

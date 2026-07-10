@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: strncpy safe copy
+# key: strncpy
+# --
+strncpy(${1:dst}, ${2:src}, sizeof(${1:dst}) - 1);
+${1:dst}[sizeof(${1:dst}) - 1] = '\0';
+$0

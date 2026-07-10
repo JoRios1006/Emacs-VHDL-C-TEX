@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: minted code block
+# key: minted
+# --
+\begin{minted}[linenos, frame=lines]{${1:c}}
+$0
+\end{minted}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: auto-sized brackets
+# key: brack
+# --
+\left[ ${1:expr} \right]$0

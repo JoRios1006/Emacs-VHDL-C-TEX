@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: #define constant
+# key: def
+# --
+#define ${1:NAME} ${2:value}
+$0

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: report statement
+# key: report
+# --
+report "${1:Message: }" & ${2:to_string(sig)} severity ${3:note};
+$0

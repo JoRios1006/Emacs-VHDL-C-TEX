@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: C header file skeleton
+# key: hfile
+# --
+/**
+ * @file   `(file-name-nondirectory (or (buffer-file-name) "header.h"))`
+ * @brief  ${1:Module description.}
+ */
+
+#pragma once
+
+#include <stdint.h>
+#include <stdbool.h>
+
+$0

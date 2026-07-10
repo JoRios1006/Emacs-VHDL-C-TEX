@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: variable declaration
+# key: variable
+# --
+variable ${1:var_name} : ${2:integer}${3: := 0};
+$0

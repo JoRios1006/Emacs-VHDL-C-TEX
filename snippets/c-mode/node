@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: linked list node
+# key: node
+# --
+typedef struct ${1:node} {
+    ${2:int} data;
+    struct ${1:node} *next;
+} ${1:node}_t;
+$0

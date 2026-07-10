@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: pthread mutex pattern
+# key: mutex
+# --
+static pthread_mutex_t ${1:mtx} = PTHREAD_MUTEX_INITIALIZER;
+
+pthread_mutex_lock(&${1:mtx});
+$0
+pthread_mutex_unlock(&${1:mtx});

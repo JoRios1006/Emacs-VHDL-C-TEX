@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: D flip-flop register
+# key: reg
+# --
+reg_proc : process (clk)
+begin
+    if rising_edge(clk) then
+        if rst = '1' then
+            ${1:q} <= ${2:(others => '0')};
+        else
+            ${1:q} <= ${3:d};
+        end if;
+    end if;
+end process reg_proc;
+$0

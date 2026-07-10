@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: figure with two subfigures
+# key: subfig
+# --
+\begin{figure}[${1:htbp}]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{${2:fig_a}}
+        \caption{${3:Caption A.}}
+        \label{fig:${4:a}}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{${5:fig_b}}
+        \caption{${6:Caption B.}}
+        \label{fig:${7:b}}
+    \end{subfigure}
+    \caption{${8:Overall caption.}}
+    \label{fig:${9:main}}
+\end{figure}
+$0

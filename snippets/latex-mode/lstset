@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: lstset configuration
+# key: lstset
+# --
+\lstset{
+    basicstyle    = \ttfamily\small,
+    keywordstyle  = \bfseries\color{blue},
+    commentstyle  = \itshape\color{gray},
+    stringstyle   = \color{red!70!black},
+    numbers       = left,
+    numberstyle   = \tiny\color{gray},
+    breaklines    = true,
+    frame         = single,
+    tabsize       = 4,
+}
+$0

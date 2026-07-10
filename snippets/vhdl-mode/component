@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: component declaration
+# key: component
+# --
+component ${1:comp_name} is
+    port (
+        clk   : in  std_logic;
+        rst   : in  std_logic;
+        $2
+    );
+end component ${1:comp_name};
+$0

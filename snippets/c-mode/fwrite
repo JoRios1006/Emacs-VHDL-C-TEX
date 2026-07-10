@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: fwrite
+# key: fwrite
+# --
+if (fwrite(${1:buf}, sizeof(*${1:buf}), ${2:count}, ${3:fp}) != ${2:count}) {
+    $0
+}

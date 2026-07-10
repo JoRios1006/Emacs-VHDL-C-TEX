@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: \href{url}{text}
+# key: href
+# --
+\href{${1:https://example.com}}{${2:link text}}$0

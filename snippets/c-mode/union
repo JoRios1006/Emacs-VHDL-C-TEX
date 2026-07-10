@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: union definition
+# key: union
+# --
+typedef union {
+    ${1:uint32_t raw};
+    struct {
+        $2
+    };
+} ${3:name}_t;
+$0

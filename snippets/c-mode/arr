@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: array declaration
+# key: arr
+# --
+${1:int} ${2:arr}[${3:N}] = {$4};
+$0

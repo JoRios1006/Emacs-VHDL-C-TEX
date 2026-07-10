@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: auto-sized parentheses
+# key: paren
+# --
+\left( ${1:expr} \right)$0

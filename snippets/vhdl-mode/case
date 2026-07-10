@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: case statement
+# key: case
+# --
+case ${1:expr} is
+    when ${2:value} =>
+        $3
+    when ${4:value} =>
+        $5
+    when others =>
+        $0
+end case;

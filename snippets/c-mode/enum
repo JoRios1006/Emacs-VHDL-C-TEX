@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: enum definition
+# key: enum
+# --
+typedef enum {
+    ${1:VALUE1},
+    ${2:VALUE2},
+} ${3:name}_t;
+$0

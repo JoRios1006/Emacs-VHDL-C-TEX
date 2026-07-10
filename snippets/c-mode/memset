@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: memset
+# key: memset
+# --
+memset(${1:ptr}, ${2:0}, ${3:sizeof(*${1:ptr})});$0

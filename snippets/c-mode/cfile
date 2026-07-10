@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: C source file skeleton
+# key: cfile
+# --
+/**
+ * @file   `(file-name-nondirectory (or (buffer-file-name) "main.c"))`
+ * @brief  ${1:Module description.}
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+$0

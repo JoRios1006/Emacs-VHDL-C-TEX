@@ -260,7 +260,19 @@
 
 ;; ── Snippets ───────────────────────────────────────────────────────────────
 (use-package yasnippet
-  :config (yas-global-mode 1))
+  :config
+  ;; Prepend our custom snippets directory so it takes priority over
+  ;; yasnippet-snippets for any overrides.  The default entry
+  ;; (expand-file-name "snippets/" user-emacs-directory) is already
+  ;; included by yasnippet; adding it explicitly here ensures order.
+  (add-to-list 'yas-snippet-dirs
+               (expand-file-name "snippets/" user-emacs-directory) t)
+  ;; AUCTeX uses LaTeX-mode (capital L) — teach yasnippet to also look
+  ;; in latex-mode directory for that major mode.
+  (add-hook 'LaTeX-mode-hook
+            (lambda ()
+              (yas-activate-extra-mode 'latex-mode)))
+  (yas-global-mode 1))
 
 (use-package yasnippet-snippets
   :after yasnippet)

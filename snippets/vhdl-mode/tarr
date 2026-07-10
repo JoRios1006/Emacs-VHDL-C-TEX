@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: array type
+# key: tarr
+# --
+type ${1:arr_t} is array (${2:natural range <>}) of ${3:std_logic_vector(7 downto 0)};
+$0

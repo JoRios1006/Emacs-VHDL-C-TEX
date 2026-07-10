@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: entity declaration
+# key: entity
+# --
+entity ${1:entity_name} is
+    port (
+        ${2:clk   : in  std_logic;
+        rst   : in  std_logic};
+        $3
+    );
+end entity ${1:entity_name};
+$0

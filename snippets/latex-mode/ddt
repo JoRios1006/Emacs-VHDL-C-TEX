@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: total derivative d/dt
+# key: ddt
+# --
+\frac{d${1:f}}{d${2:t}}$0

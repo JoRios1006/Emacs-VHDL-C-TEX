@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: \subsubsection
+# key: ssub
+# --
+\subsubsection{${1:Subsubsection Title}}
+\label{subsubsec:${2:label}}
+
+$0

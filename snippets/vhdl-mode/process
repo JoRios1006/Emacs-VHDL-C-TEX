@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: bare process
+# key: process
+# --
+${1:proc_name} : process (${2:all})
+begin
+    $0
+end process ${1:proc_name};

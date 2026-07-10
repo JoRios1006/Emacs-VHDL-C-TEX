@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Doxygen file header
+# key: fdoc
+# --
+/**
+ * @file   `(file-name-nondirectory (or (buffer-file-name) "file.c"))`
+ * @brief  ${1:Module description.}
+ * @author ${2:`(user-full-name)`}
+ * @date   `(format-time-string "%Y-%m-%d")`
+ */
+$0

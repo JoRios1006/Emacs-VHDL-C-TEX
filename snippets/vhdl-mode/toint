@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: to_integer conversion
+# key: toint
+# --
+to_integer(unsigned(${1:sig}))$0

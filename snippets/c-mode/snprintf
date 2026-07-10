@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: snprintf (safe)
+# key: snprintf
+# --
+snprintf(${1:buf}, sizeof(${1:buf}), "${2:%s}", ${3:val});$0

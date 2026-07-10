@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: asynchronous reset clocked process
+# key: asyncproc
+# --
+${1:async_proc} : process (clk, ${2:rst})
+begin
+    if ${2:rst} = '1' then
+        $3
+    elsif rising_edge(clk) then
+        $0
+    end if;
+end process ${1:async_proc};

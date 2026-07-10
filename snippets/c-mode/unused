@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: suppress unused parameter warning
+# key: unused
+# --
+(void)${1:param};$0

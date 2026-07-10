@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: component instantiation (port map)
+# key: portmap
+# --
+${1:inst_name} : entity work.${2:entity_name}
+    port map (
+        clk   => ${3:clk},
+        rst   => ${4:rst},
+        $0
+    );

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: definition environment
+# key: defn
+# --
+\begin{definition}[${1:Name}]
+    \label{def:${2:label}}
+    $0
+\end{definition}

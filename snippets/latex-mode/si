@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: siunitx \si{} (unit only)
+# key: si
+# --
+\si{${1:\kilo\gram}}$0

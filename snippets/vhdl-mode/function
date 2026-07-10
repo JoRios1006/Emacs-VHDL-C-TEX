@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: function declaration
+# key: function
+# --
+function ${1:func_name} (
+    ${2:arg1} : ${3:std_logic_vector}
+) return ${4:integer} is
+    $5
+begin
+    $0
+end function ${1:func_name};

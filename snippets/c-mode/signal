@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: signal handler
+# key: signal
+# --
+#include <signal.h>
+
+static volatile sig_atomic_t ${1:g_running} = 1;
+
+static void ${2:sig_handler}(int sig)
+{
+    (void)sig;
+    ${1:g_running} = 0;
+}
+
+signal(${3:SIGINT}, ${2:sig_handler});
+$0

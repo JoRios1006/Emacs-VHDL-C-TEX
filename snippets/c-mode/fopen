@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: fopen / fclose pattern
+# key: fopen
+# --
+FILE *${1:fp} = fopen(${2:"file.txt"}, "${3:r}");
+if (!${1:fp}) {
+    perror("fopen");
+    return ${4:-1};
+}
+$0
+fclose(${1:fp});

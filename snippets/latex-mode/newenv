@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: \newenvironment
+# key: newenv
+# --
+\newenvironment{${1:name}}[${2:0}]{%
+    ${3:begin code}%
+}{%
+    ${4:end code}%
+}
+$0

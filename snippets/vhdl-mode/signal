@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: signal declaration (std_logic)
+# key: signal
+# --
+signal ${1:sig_name} : std_logic${2: := '0'};
+$0

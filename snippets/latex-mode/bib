@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: bibliography (BibTeX)
+# key: bib
+# --
+\bibliographystyle{${1:plain}}
+\bibliography{${2:references}}
+$0

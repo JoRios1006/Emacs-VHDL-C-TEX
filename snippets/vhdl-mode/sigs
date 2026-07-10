@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: signed signal
+# key: sigs
+# --
+signal ${1:sig_name} : signed(${2:7} downto 0)${3: := (others => '0')};
+$0

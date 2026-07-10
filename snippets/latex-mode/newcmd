@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: \newcommand
+# key: newcmd
+# --
+\newcommand{\${1:name}}[${2:1}]{${3:definition}}
+$0

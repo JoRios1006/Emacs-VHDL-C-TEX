@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: subtype declaration
+# key: subtype
+# --
+subtype ${1:byte_t} is std_logic_vector(7 downto 0);
+$0

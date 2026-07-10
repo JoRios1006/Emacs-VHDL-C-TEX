@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: static_assert
+# key: sassert
+# --
+_Static_assert(${1:condition}, "${2:message}");$0

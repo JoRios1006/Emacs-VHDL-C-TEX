@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: pgfplots axes
+# key: pgfplot
+# --
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel = {${1:$x$}},
+    ylabel = {${2:$y$}},
+    grid   = major,
+    width  = 0.8\textwidth,
+    height = 0.5\textwidth,
+]
+    \addplot[${3:blue, thick}] coordinates {
+        $0
+    };
+    \addlegendentry{${4:Series}}
+\end{axis}
+\end{tikzpicture}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: std_logic_vector conversion
+# key: slv
+# --
+std_logic_vector(${1:unsigned_sig})$0

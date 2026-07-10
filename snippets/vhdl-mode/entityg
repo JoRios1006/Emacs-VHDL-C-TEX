@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: entity with generics
+# key: entityg
+# --
+entity ${1:entity_name} is
+    generic (
+        ${2:DATA_WIDTH : integer := 8}
+    );
+    port (
+        clk   : in  std_logic;
+        rst   : in  std_logic;
+        $3
+    );
+end entity ${1:entity_name};
+$0

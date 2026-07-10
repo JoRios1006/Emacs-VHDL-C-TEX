@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: \citep{} natbib
+# key: citep
+# --
+\citep{${1:key}}$0

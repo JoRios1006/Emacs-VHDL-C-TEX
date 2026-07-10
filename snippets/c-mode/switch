@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: switch statement
+# key: switch
+# --
+switch (${1:expr}) {
+    case ${2:value}:
+        $3
+        break;
+    case ${4:value}:
+        $5
+        break;
+    default:
+        $0
+        break;
+}

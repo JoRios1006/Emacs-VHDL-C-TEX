@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: n-th root
+# key: nsqrt
+# --
+\sqrt[${1:n}]{${2:x}}$0

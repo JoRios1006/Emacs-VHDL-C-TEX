@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: record type
+# key: trec
+# --
+type ${1:rec_t} is record
+    ${2:field1} : ${3:std_logic};
+    ${4:field2} : ${5:integer};
+end record ${1:rec_t};
+$0

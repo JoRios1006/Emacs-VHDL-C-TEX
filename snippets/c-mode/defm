@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: #define macro
+# key: defm
+# --
+#define ${1:NAME}(${2:x}) (${3:x})
+$0

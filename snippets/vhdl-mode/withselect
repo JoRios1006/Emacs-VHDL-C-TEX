@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: with-select concurrent assignment
+# key: withselect
+# --
+with ${1:sel} select ${2:output} <=
+    ${3:val_a} when "${4:00}",
+    ${5:val_b} when "${6:01}",
+    ${7:(others => '0')} when others;
+$0

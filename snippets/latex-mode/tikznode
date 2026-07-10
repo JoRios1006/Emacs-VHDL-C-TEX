@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: tikz node
+# key: tikznode
+# --
+\node[${1:draw, rectangle}] (${2:name}) at (${3:0,0}) {${4:label}};
+$0

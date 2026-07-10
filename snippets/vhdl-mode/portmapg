@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: component instantiation with generics
+# key: portmapg
+# --
+${1:inst_name} : entity work.${2:entity_name}
+    generic map (
+        ${3:DATA_WIDTH} => ${4:8}
+    )
+    port map (
+        clk   => ${5:clk},
+        rst   => ${6:rst},
+        $0
+    );

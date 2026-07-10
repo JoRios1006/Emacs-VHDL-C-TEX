@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: variadic function
+# key: variadic
+# --
+#include <stdarg.h>
+
+${1:void} ${2:name}(${3:const char *fmt}, ...)
+{
+    va_list args;
+    va_start(args, ${4:fmt});
+    $0
+    va_end(args);
+}

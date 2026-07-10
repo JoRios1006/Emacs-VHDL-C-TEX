@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: __attribute__((packed)) struct
+# key: packed
+# --
+typedef struct __attribute__((packed)) {
+    $1
+} ${2:name}_t;
+$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: __builtin_expect unlikely
+# key: unlikely
+# --
+__builtin_expect(!!(${1:cond}), 0)$0

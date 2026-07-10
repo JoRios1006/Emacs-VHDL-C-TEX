@@ -1,0 +1,42 @@
+# -*- mode: snippet -*-
+# name: testbench skeleton
+# key: tb
+# --
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity ${1:dut_name}_tb is
+end entity ${1:dut_name}_tb;
+
+architecture sim of ${1:dut_name}_tb is
+
+    constant CLK_PERIOD : time := ${2:10} ns;
+
+    signal clk : std_logic := '0';
+    signal rst : std_logic := '1';
+    $3
+
+begin
+
+    -- Clock generation
+    clk <= not clk after CLK_PERIOD / 2;
+
+    -- DUT instantiation
+    dut : entity work.${1:dut_name}
+        port map (
+            clk => clk,
+            rst => rst,
+            $4
+        );
+
+    -- Stimulus
+    stim_proc : process
+    begin
+        wait for CLK_PERIOD * 5;
+        rst <= '0';
+        $0
+        wait;
+    end process stim_proc;
+
+end architecture sim;

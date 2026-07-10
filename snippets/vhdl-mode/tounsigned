@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: to_unsigned conversion
+# key: tounsigned
+# --
+to_unsigned(${1:val}, ${2:8})$0

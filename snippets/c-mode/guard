@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: header guard
+# key: guard
+# --
+#ifndef ${1:`(upcase (file-name-base (or (buffer-file-name) "header")))`}_H
+#define ${1:`(upcase (file-name-base (or (buffer-file-name) "header")))`}_H
+
+$0
+
+#endif /* ${1:`(upcase (file-name-base (or (buffer-file-name) "header")))`}_H */

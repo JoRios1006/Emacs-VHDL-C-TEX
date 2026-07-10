@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: abstract environment
+# key: abstract
+# --
+\begin{abstract}
+    $0
+\end{abstract}

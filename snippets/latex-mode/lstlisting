@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: lstlisting code block
+# key: lstlisting
+# --
+\begin{lstlisting}[language=${1:C}, caption={${2:Caption}}, label={lst:${3:label}}]
+$0
+\end{lstlisting}

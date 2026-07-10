@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: 2:1 mux
+# key: mux2
+# --
+${1:y} <= ${2:a} when ${3:sel} = '0' else ${4:b};
+$0

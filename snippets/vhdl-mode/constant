@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: constant declaration
+# key: constant
+# --
+constant ${1:C_NAME} : ${2:integer} := ${3:0};
+$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: to_signed conversion
+# key: tosigned
+# --
+to_signed(${1:val}, ${2:8})$0

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: CLAMP macro
+# key: clamp
+# --
+#define CLAMP(x, lo, hi) (MIN(MAX((x), (lo)), (hi)))
+$0

@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: appendix
+# key: app
+# --
+\appendix
+
+\chapter{${1:Appendix Title}}
+\label{app:${2:label}}
+
+$0

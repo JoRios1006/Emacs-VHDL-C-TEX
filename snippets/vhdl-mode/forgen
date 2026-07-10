@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: for...generate
+# key: forgen
+# --
+${1:gen_name} : for ${2:i} in 0 to ${3:N-1} generate
+    $0
+end generate ${1:gen_name};

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: when-else concurrent assignment
+# key: whenelse
+# --
+${1:output} <= ${2:val_a} when ${3:condition} else
+               ${4:val_b};
+$0

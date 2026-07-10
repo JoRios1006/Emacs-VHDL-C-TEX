@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: wait until rising_edge
+# key: wait
+# --
+wait until rising_edge(clk);$0

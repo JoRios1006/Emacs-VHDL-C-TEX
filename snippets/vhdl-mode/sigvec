@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: std_logic_vector signal
+# key: sigvec
+# --
+signal ${1:sig_name} : std_logic_vector(${2:7} downto 0)${3: := (others => '0')};
+$0

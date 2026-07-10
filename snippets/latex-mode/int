@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: \int with limits
+# key: int
+# --
+\int_{${1:a}}^{${2:b}} ${3:f(x)} \, d${4:x}$0

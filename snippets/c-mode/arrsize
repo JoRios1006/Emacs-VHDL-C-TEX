@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: ARRAY_SIZE macro
+# key: arrsize
+# --
+#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
+$0

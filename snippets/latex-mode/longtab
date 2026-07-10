@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: longtable
+# key: longtab
+# --
+\begin{longtable}{${1:lll}}
+    \caption{${2:Caption.}} \label{tab:${3:label}} \\
+    \toprule
+    ${4:Col1} & ${5:Col2} & ${6:Col3} \\
+    \midrule
+    \endfirsthead
+    \multicolumn{3}{c}{\tablename\ \thetable{} (continued)} \\
+    \toprule
+    ${4:Col1} & ${5:Col2} & ${6:Col3} \\
+    \midrule
+    \endhead
+    \bottomrule
+    \endlastfoot
+    $0
+\end{longtable}

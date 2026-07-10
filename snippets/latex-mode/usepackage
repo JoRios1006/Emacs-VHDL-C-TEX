@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: \usepackage
+# key: usepackage
+# --
+\usepackage[${1:options}]{${2:package}}
+$0

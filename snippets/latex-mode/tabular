@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: tabular only
+# key: tabular
+# --
+\begin{tabular}{${1:lll}}
+    \toprule
+    ${2:A} & ${3:B} & ${4:C} \\
+    \midrule
+    $0 \\
+    \bottomrule
+\end{tabular}

@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: Doxygen function comment
+# key: doc
+# --
+/**
+ * @brief ${1:Brief description.}
+ *
+ * ${2:Detailed description.}
+ *
+ * @param ${3:param}  ${4:Description.}
+ * @return ${5:Description of return value.}
+ */
+$0

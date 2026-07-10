@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: wait for N ns
+# key: waitns
+# --
+wait for ${1:10} ns;$0

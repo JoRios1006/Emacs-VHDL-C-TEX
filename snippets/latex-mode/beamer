@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# name: beamer presentation
+# key: beamer
+# --
+\documentclass{beamer}
+\usetheme{${1:Madrid}}
+
+\title{${2:Presentation Title}}
+\author{${3:`(user-full-name)`}}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+\section{${4:Introduction}}
+
+\begin{frame}{${5:Frame Title}}
+    $0
+\end{frame}
+
+\end{document}

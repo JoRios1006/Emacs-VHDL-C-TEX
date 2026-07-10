@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: architecture body
+# key: arch
+# --
+architecture ${1:rtl} of ${2:entity_name} is
+    $3
+begin
+    $0
+end architecture ${1:rtl};

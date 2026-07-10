@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: pthread_create
+# key: pthread
+# --
+#include <pthread.h>
+
+static void *${1:thread_fn}(void *arg)
+{
+    $2
+    return NULL;
+}
+
+pthread_t ${3:tid};
+if (pthread_create(&${3:tid}, NULL, ${1:thread_fn}, ${4:NULL}) != 0) {
+    perror("pthread_create");
+    $0
+}
+pthread_join(${3:tid}, NULL);

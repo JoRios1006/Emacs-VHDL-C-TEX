@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: combinational process
+# key: combproc
+# --
+${1:comb_proc} : process (all)
+begin
+    $0
+end process ${1:comb_proc};

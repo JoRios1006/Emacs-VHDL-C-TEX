@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: fread
+# key: fread
+# --
+size_t ${1:n} = fread(${2:buf}, sizeof(${3:char}), ${4:count}, ${5:fp});
+if (${1:n} != ${4:count}) {
+    $0
+}

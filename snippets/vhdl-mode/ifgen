@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: if...generate
+# key: ifgen
+# --
+${1:gen_name} : if ${2:condition} generate
+    $0
+end generate ${1:gen_name};

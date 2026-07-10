@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: up counter with enable and load
+# key: counter
+# --
+signal ${1:cnt} : unsigned(${2:7} downto 0) := (others => '0');
+
+cnt_proc : process (clk)
+begin
+    if rising_edge(clk) then
+        if rst = '1' then
+            ${1:cnt} <= (others => '0');
+        elsif ${3:en} = '1' then
+            if ${1:cnt} = ${4:to_unsigned(255, 8)} then
+                ${1:cnt} <= (others => '0');
+            else
+                ${1:cnt} <= ${1:cnt} + 1;
+            end if;
+        end if;
+    end if;
+end process cnt_proc;
+$0

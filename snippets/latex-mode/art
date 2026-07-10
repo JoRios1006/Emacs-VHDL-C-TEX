@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# name: article skeleton
+# key: art
+# --
+\documentclass[${1:12pt,a4paper}]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{microtype}
+
+\title{${2:Title}}
+\author{${3:`(user-full-name)`}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+    $4
+\end{abstract}
+
+$0
+
+\end{document}

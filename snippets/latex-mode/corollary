@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: corollary environment
+# key: corollary
+# --
+\begin{corollary}
+    \label{cor:${1:label}}
+    $0
+\end{corollary}

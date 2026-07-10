@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: shift register
+# key: shiftreg
+# --
+signal ${1:shreg} : std_logic_vector(${2:7} downto 0) := (others => '0');
+
+shift_proc : process (clk)
+begin
+    if rising_edge(clk) then
+        if rst = '1' then
+            ${1:shreg} <= (others => '0');
+        else
+            ${1:shreg} <= ${1:shreg}(${2:7}-1 downto 0) & ${3:data_in};
+        end if;
+    end if;
+end process shift_proc;
+$0

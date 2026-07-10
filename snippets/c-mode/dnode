@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: doubly linked list node
+# key: dnode
+# --
+typedef struct ${1:node} {
+    ${2:int} data;
+    struct ${1:node} *prev;
+    struct ${1:node} *next;
+} ${1:node}_t;
+$0

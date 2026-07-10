@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: 2D array
+# key: arr2d
+# --
+${1:int} ${2:mat}[${3:ROWS}][${4:COLS}] = {0};
+$0

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: tikz arrow
+# key: tikzarrow
+# --
+\draw[->, thick] (${1:start}) -- (${2:end});
+$0

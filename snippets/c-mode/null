@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: NULL pointer check
+# key: null
+# --
+if (${1:ptr} == NULL) {
+    $0
+    return ${2:-1};
+}

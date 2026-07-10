@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: proposition environment
+# key: prop
+# --
+\begin{proposition}
+    \label{prop:${1:label}}
+    $0
+\end{proposition}

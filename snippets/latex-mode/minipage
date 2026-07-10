@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: minipage
+# key: minipage
+# --
+\begin{minipage}[${1:t}]{${2:0.48}\textwidth}
+    $0
+\end{minipage}

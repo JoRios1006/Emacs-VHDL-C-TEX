@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: unsigned signal
+# key: sigu
+# --
+signal ${1:sig_name} : unsigned(${2:7} downto 0)${3: := (others => '0')};
+$0

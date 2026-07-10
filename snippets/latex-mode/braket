@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: angle brackets ⟨.⟩
+# key: braket
+# --
+\left\langle ${1:x} \right\rangle$0

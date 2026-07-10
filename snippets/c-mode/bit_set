@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: bit manipulation macros
+# key: bit_set
+# --
+#define BIT(n)           (1UL << (n))
+#define BIT_SET(x, n)    ((x) |=  BIT(n))
+#define BIT_CLR(x, n)    ((x) &= ~BIT(n))
+#define BIT_TGL(x, n)    ((x) ^=  BIT(n))
+#define BIT_GET(x, n)    (((x) >> (n)) & 1UL)
+$0

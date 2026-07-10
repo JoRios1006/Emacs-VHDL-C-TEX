@@ -1,0 +1,39 @@
+# -*- mode: snippet -*-
+# name: 3-process FSM template
+# key: fsm
+# --
+-- State type
+type ${1:state_t} is (${2:IDLE, ACTIVE, DONE});
+signal curr_state, next_state : ${1:state_t};
+
+-- State register
+state_reg : process (clk)
+begin
+    if rising_edge(clk) then
+        if rst = '1' then
+            curr_state <= ${3:IDLE};
+        else
+            curr_state <= next_state;
+        end if;
+    end if;
+end process state_reg;
+
+-- Next-state logic
+nsl : process (curr_state, ${4:inputs})
+begin
+    next_state <= curr_state;  -- default
+    case curr_state is
+        when ${3:IDLE} =>
+            $0
+        when ${5:ACTIVE} =>
+            null;
+        when others =>
+            next_state <= ${3:IDLE};
+    end case;
+end process nsl;
+
+-- Output logic
+output_proc : process (curr_state)
+begin
+    -- defaults
+end process output_proc;

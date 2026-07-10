@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: realloc (safe pattern)
+# key: realloc
+# --
+{
+    ${1:type} *${2:tmp} = realloc(${3:ptr}, ${4:new_size});
+    if (!${2:tmp}) {
+        $5
+    }
+    ${3:ptr} = ${2:tmp};
+}
+$0

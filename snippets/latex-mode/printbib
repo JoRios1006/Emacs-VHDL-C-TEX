@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: \printbibliography
+# key: printbib
+# --
+\printbibliography[heading=bibintoc]
+$0

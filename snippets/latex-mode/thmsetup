@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: amsthm theorem setup block
+# key: thmsetup
+# --
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[${1:section}]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+$0
