@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: ifneq conditional block
+# key: ifneq
+# --
+ifneq ($(${1:VAR}),${2:value})
+  ${0:# body}
+endif

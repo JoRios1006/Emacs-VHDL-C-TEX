@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: multi-line macro (define)
+# key: define
+# --
+define ${1:MACRO}
+${0:line1}
+endef

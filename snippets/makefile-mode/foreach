@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: foreach — iterate a list
+# key: foreach
+# --
+$(foreach ${1:item},$(${2:LIST}),${0:$(call do_something,$($(1:item)))})

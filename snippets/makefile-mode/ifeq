@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: ifeq conditional block
+# key: ifeq
+# --
+ifeq ($(${1:VAR}),${2:value})
+  ${3:# true branch}
+else
+  ${0:# false branch}
+endif

@@ -205,6 +205,15 @@
     "hk" '(describe-key                :which-key "key")
     "hm" '(describe-mode               :which-key "mode")
 
+    ;; VHDL / GHDL
+    "v"  '(:ignore t :which-key "vhdl/ghdl")
+    "va" '(ghdl-analyze                :which-key "analyze file")
+    "vi" '(ghdl-import                 :which-key "import file")
+    "ve" '(ghdl-elaborate              :which-key "elaborate")
+    "vr" '(ghdl-run                    :which-key "run/simulate")
+    "vx" '(ghdl-build-run              :which-key "build+run (binary)")
+    "vc" '(ghdl-clean                  :which-key "clean work lib")
+
     ;; Open / misc
     "o"  '(:ignore t :which-key "open")
     "oe" '(eshell                      :which-key "eshell")
@@ -347,9 +356,83 @@
   (vhdl-upper-enum-values  'upcase)
   (vhdl-upper-constants    'upcase))
 
-;; VHDL Language Server (vhdl_ls) — install separately: cargo install vhdl-ls
-;; lsp-mode will pick it up automatically when 'vhdl-ls' is on PATH.
-;; No extra Emacs package required; lsp-mode ships built-in vhdl-ls support.
+;; VHDL Language Server — lsp-mode ships a built-in `lsp-vhdl` client
+;; (see lsp-vhdl.el) supporting four backends: vhdl-tool (default),
+;; hdl-checker, vhdl-ls, and ghdl-ls. We use VHDL-LS (rust_hdl), which is
+;; installed via Nix (`vhdl_ls` binary) — a complete LSP implementation
+;; with diagnostics, go-to-definition, and find-references.
+(use-package lsp-vhdl
+  :ensure nil                            ; bundled inside lsp-mode
+  :after (lsp-mode vhdl-mode)
+  :custom
+  (lsp-vhdl-server 'vhdl-ls)
+  (lsp-vhdl-server-path (executable-find "vhdl_ls")))
+
+;; ── GHDL build helpers ────────────────────────────────────────────────────
+;; All commands run in a *compilation* buffer so error lines are clickable.
+;; Adjust `ghdl-std' to match your project's VHDL revision.
+
+(defvar ghdl-std "--std=08"
+  "VHDL standard flag passed to every GHDL invocation (--std=93|08|19).")
+
+(defun ghdl--file ()
+  "Return the current buffer's file path, or signal an error."
+  (or (buffer-file-name)
+      (user-error "Buffer is not visiting a file")))
+
+(defun ghdl--entity-default ()
+  "Guess the top-level entity name from the current buffer's file stem."
+  (file-name-base (or (buffer-file-name) "")))
+
+;;;###autoload
+(defun ghdl-analyze ()
+  "Analyze the current VHDL file: ghdl -a [std] <file>."
+  (interactive)
+  (compile (format "ghdl -a %s %s" ghdl-std
+                   (shell-quote-argument (ghdl--file)))))
+
+;;;###autoload
+(defun ghdl-import ()
+  "Import current VHDL file into the work library: ghdl -i [std] <file>."
+  (interactive)
+  (compile (format "ghdl -i %s %s" ghdl-std
+                   (shell-quote-argument (ghdl--file)))))
+
+;;;###autoload
+(defun ghdl-elaborate (entity)
+  "Elaborate design unit ENTITY: ghdl -e [std] <entity>."
+  (interactive (list (read-string "Elaborate entity: " (ghdl--entity-default))))
+  (compile (format "ghdl -e %s %s" ghdl-std
+                   (shell-quote-argument entity))))
+
+;;;###autoload
+(defun ghdl-run (entity)
+  "Simulate ENTITY with ghdl -r; optionally prompt for --stop-time."
+  (interactive (list (read-string "Simulate entity: " (ghdl--entity-default))))
+  (let* ((stop (read-string "Stop time (e.g. 1us, blank = none): "))
+         (stop-flag (if (string-empty-p stop) ""
+                      (format " --stop-time=%s" stop))))
+    (compile (format "ghdl -r %s %s%s" ghdl-std
+                     (shell-quote-argument entity) stop-flag))))
+
+;;;###autoload
+(defun ghdl-build-run (entity)
+  "Analyze current file, elaborate, link to binary, then run it.
+Equivalent to: ghdl -a <file> && ghdl -e -o <entity> <entity> && ./<entity>"
+  (interactive (list (read-string "Top entity (= binary name): "
+                                  (ghdl--entity-default))))
+  (let ((q-file   (shell-quote-argument (ghdl--file)))
+        (q-entity (shell-quote-argument entity)))
+    (compile (format "ghdl -a %s %s && ghdl -e %s -o %s %s && ./%s"
+                     ghdl-std q-file
+                     ghdl-std q-entity q-entity
+                     entity))))
+
+;;;###autoload
+(defun ghdl-clean ()
+  "Remove GHDL work-library artifacts from the current directory."
+  (interactive)
+  (compile "ghdl --remove"))
 
 ;; ── LaTeX (AUCTeX) ────────────────────────────────────────────────────────
 (use-package auctex
@@ -442,3 +525,15 @@
   :custom (git-gutter:update-interval 0.3))
 
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: all target
+# key: all
+# --
+all: ${0:$(TARGET)}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: variable — append
+# key: varapp
+# --
+${1:VAR} += ${0:value}

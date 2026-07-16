@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: variable — conditional (user override safe)
+# key: varcheck
+# --
+${1:VAR} ?= ${0:default}

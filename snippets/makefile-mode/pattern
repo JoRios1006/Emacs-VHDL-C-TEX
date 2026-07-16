@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: pattern rule (%.o: %.c)
+# key: pattern
+# --
+%.${1:o}: %.${2:c}
+	${0:$(CC) $(CFLAGS) -c -o $@ $<}

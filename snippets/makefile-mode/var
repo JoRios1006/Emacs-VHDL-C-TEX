@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: variable — immediate assignment
+# key: var
+# --
+${1:VAR} := ${0:value}

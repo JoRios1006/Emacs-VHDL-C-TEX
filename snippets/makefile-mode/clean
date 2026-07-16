@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: clean target
+# key: clean
+# --
+clean:
+	rm -rf ${0:$(OBJS) $(TARGET)}

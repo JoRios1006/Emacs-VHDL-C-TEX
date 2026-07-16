@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: wildcard source list
+# key: wildcard
+# --
+${1:SRCS} := $(wildcard ${2:src}/*.${3:c})
+${4:OBJS} := $(${1:SRCS}:%.${3:c}=%.${5:o})

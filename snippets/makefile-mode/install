@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: install target
+# key: install
+# --
+PREFIX ?= /usr/local
+
+install: $(TARGET)
+	install -Dm755 $(TARGET) $(DESTDIR)$(PREFIX)/bin/$(TARGET)

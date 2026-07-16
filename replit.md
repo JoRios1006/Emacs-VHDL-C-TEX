@@ -62,13 +62,18 @@ All major commands are behind `SPC` in Normal mode.
 
 ## VHDL Language Server
 
-For full VHDL LSP support install `vhdl_ls`:
+VHDL LSP is fully configured out of the box. `lsp-mode` ships a built-in
+`lsp-vhdl` client supporting four backends (`vhdl-tool`, `hdl-checker`,
+`vhdl-ls`, `ghdl-ls`); this project uses **VHDL-LS** (`rust_hdl`), installed
+via Nix as the `vhdl_ls` binary, and pins it explicitly in `init.el`:
 
-```bash
-cargo install vhdl-ls
+```elisp
+(lsp-vhdl-server 'vhdl-ls)
+(lsp-vhdl-server-path (executable-find "vhdl_ls"))
 ```
 
-Then add `~/.cargo/bin` to your PATH and restart LSP (`SPC l R`).
+Opening a `.vhd`/`.vhdl` file should show `LSP[vhdl-ls]` in the modeline with
+diagnostics, go-to-definition, and find-references working immediately.
 
 ## User preferences
 

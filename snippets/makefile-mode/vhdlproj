@@ -1,0 +1,39 @@
+# -*- mode: snippet -*-
+# name: VHDL/GHDL project Makefile
+# key: vhdlproj
+# --
+# ── GHDL settings ─────────────────────────────────────────────────────────
+GHDL    := ghdl
+STD     := --std=08
+WORK    := --work=work
+WAVEOPT := --vcd=${1:wave}.vcd
+
+# ── Design sources (ordered for analysis) ─────────────────────────────────
+TOP     := ${2:top}
+SRCS    := $(wildcard *.vhd)
+
+.PHONY: all analyze elaborate run wave clean
+
+all: analyze elaborate
+
+analyze:
+	$(GHDL) -a $(STD) $(WORK) $(SRCS)
+
+elaborate: analyze
+	$(GHDL) -e $(STD) $(WORK) $(TOP)
+
+run: elaborate
+	$(GHDL) -r $(STD) $(WORK) $(TOP) ${3:--stop-time=1us}
+
+wave: elaborate
+	$(GHDL) -r $(STD) $(WORK) $(TOP) $(WAVEOPT)
+	${4:gtkwave $(1:wave).vcd}
+
+# Build a native simulation binary
+$(TOP): analyze
+	$(GHDL) -e $(STD) $(WORK) -o $(TOP) $(TOP)
+
+clean:
+	$(GHDL) --remove
+	rm -f $(TOP) *.vcd *.ghw
+$0

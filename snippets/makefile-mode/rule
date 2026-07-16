@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: explicit rule
+# key: rule
+# --
+${1:target}: ${2:prerequisites}
+	${0:@echo "Building $@"}

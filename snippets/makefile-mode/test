@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: test / check target
+# key: test
+# --
+test: $(TARGET)
+	${0:./$< $(TESTFLAGS)}
