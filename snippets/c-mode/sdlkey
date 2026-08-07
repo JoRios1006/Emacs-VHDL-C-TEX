@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: SDL3 keyboard event
+# key: sdlkey
+# --
+case SDL_EVENT_KEY_DOWN:
+    if (${1:event}.key.key == SDLK_${2:ESCAPE}) {
+        ${3:running} = false;
+    }
+    $0
+    break;

@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: copy SDL assets
+# key: sdlasset
+# --
+ASSET_DIR := ${1:assets}
+BUILD_DIR := ${2:build}
+ASSETS    := $(wildcard $(ASSET_DIR)/*)
+
+assets: $(ASSETS:%=$(BUILD_DIR)/%)
+
+$(BUILD_DIR)/%: %
+	mkdir -p $(dir $@)
+	cp $< $@
+
+$0

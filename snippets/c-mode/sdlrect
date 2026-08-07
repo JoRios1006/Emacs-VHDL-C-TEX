@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: SDL3 filled rectangle
+# key: sdlrect
+# --
+SDL_FRect ${1:rect} = {
+    .x = ${2:100.0f},
+    .y = ${3:100.0f},
+    .w = ${4:200.0f},
+    .h = ${5:100.0f}
+};
+SDL_SetRenderDrawColor(${6:renderer}, ${7:255}, ${8:255}, ${9:255}, SDL_ALPHA_OPAQUE);
+SDL_RenderFillRect(${6:renderer}, &${1:rect});
+$0

@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: SDL3 copy texture
+# key: sdlcopy
+# --
+SDL_FRect ${1:destination} = {
+    .x = ${2:0.0f}, .y = ${3:0.0f},
+    .w = ${4:256.0f}, .h = ${5:256.0f}
+};
+SDL_RenderTexture(${6:renderer}, ${7:texture}, NULL, &${1:destination});
+$0

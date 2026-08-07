@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: SDL3 formatted log
+# key: sdllog
+# --
+SDL_Log("${1:value}: %${2:d}", ${0:value});

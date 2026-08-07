@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: SDL3 window creation
+# key: sdlwindow
+# --
+SDL_Window *${1:window} = SDL_CreateWindow(
+    "${2:SDL3 application}",
+    ${3:1280},
+    ${4:720},
+    SDL_WINDOW_RESIZABLE
+);
+if (!${1:window}) {
+    SDL_Log("SDL_CreateWindow failed: %s", SDL_GetError());
+    SDL_Quit();
+    return EXIT_FAILURE;
+}
+$0

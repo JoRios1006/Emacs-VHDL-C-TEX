@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: SDL3 renderer creation
+# key: sdlrenderer
+# --
+SDL_Renderer *${1:renderer} = SDL_CreateRenderer(${2:window}, NULL);
+if (!${1:renderer}) {
+    SDL_Log("SDL_CreateRenderer failed: %s", SDL_GetError());
+    SDL_DestroyWindow(${2:window});
+    SDL_Quit();
+    return EXIT_FAILURE;
+}
+$0

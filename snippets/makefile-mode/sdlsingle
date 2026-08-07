@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# name: SDL3 single-file Makefile
+# key: sdlsingle
+# --
+CC       := cc
+CFLAGS   := -std=c17 -Wall -Wextra -Wpedantic -g
+SDL_CFLAGS := $(shell pkg-config --cflags sdl3 2>/dev/null)
+SDL_LIBS   := $(shell pkg-config --libs sdl3 2>/dev/null)
+TARGET   := ${1:game}
+SOURCE   := ${2:main.c}
+
+.PHONY: all run clean check
+
+all: $(TARGET)
+
+$(TARGET): $(SOURCE)
+	$(CC) $(SDL_CFLAGS) $(CFLAGS) $< $(SDL_LIBS) -o $@
+
+run: $(TARGET)
+	./$(TARGET)
+
+check:
+	$(CC) $(SDL_CFLAGS) $(CFLAGS) -fsyntax-only $(SOURCE)
+
+clean:
+	rm -f $(TARGET)
+
+$0

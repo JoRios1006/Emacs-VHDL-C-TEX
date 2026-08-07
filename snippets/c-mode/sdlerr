@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: SDL3 error check
+# key: sdlerr
+# --
+if (!${1:condition}) {
+    SDL_Log("SDL error: %s", SDL_GetError());
+    ${0:return EXIT_FAILURE;}
+}

@@ -214,6 +214,14 @@
     "vx" '(ghdl-build-run              :which-key "build+run (binary)")
     "vc" '(ghdl-clean                  :which-key "clean work lib")
 
+    ;; SDL3 project
+    "d"  '(:ignore t :which-key "SDL3")
+    "db" '(sdl-build                   :which-key "build")
+    "dr" '(sdl-run                     :which-key "build+run")
+    "dd" '(sdl-debug                   :which-key "debug + sanitizers")
+    "dc" '(sdl-check                   :which-key "syntax check")
+    "dx" '(sdl-clean                   :which-key "clean")
+
     ;; Open / misc
     "o"  '(:ignore t :which-key "open")
     "oe" '(eshell                      :which-key "eshell")
@@ -281,6 +289,12 @@
   (add-hook 'LaTeX-mode-hook
             (lambda ()
               (yas-activate-extra-mode 'latex-mode)))
+  ;; Emacs uses makefile-gmake-mode for GNU Makefiles; keep the snippets
+  ;; directory named makefile-mode while activating it for both variants.
+  (dolist (mode '(makefile-gmake-mode makefile-bsdmake-mode))
+    (add-hook (intern (format "%s-hook" mode))
+              (lambda ()
+                (yas-activate-extra-mode 'makefile-mode))))
   (yas-global-mode 1))
 
 (use-package yasnippet-snippets
@@ -433,6 +447,52 @@ Equivalent to: ghdl -a <file> && ghdl -e -o <entity> <entity> && ./<entity>"
   "Remove GHDL work-library artifacts from the current directory."
   (interactive)
   (compile "ghdl --remove"))
+
+;; ── SDL3 build helpers ────────────────────────────────────────────────────
+;; These use the Makefile in the nearest ancestor directory.  The SDL3
+;; snippets provide Makefiles based on pkg-config, so this also works when
+;; SDL3 is installed outside the default compiler search path.
+
+(defun sdl--project-directory ()
+  "Return the nearest directory containing a Makefile.
+Signal a user error when none can be found."
+  (or (locate-dominating-file default-directory "Makefile")
+      (user-error "No Makefile found above %s" default-directory)))
+
+(defun sdl--make (target)
+  "Run make TARGET from the nearest SDL project directory."
+  (let ((default-directory (sdl--project-directory)))
+    (compile (format "make %s" target))))
+
+;;;###autoload
+(defun sdl-build ()
+  "Build the SDL3 project with its default Makefile target."
+  (interactive)
+  (sdl--make "all"))
+
+;;;###autoload
+(defun sdl-run ()
+  "Build and run the SDL3 project."
+  (interactive)
+  (sdl--make "run"))
+
+;;;###autoload
+(defun sdl-debug ()
+  "Build the SDL3 project with sanitizers and debug flags."
+  (interactive)
+  (sdl--make "debug"))
+
+;;;###autoload
+(defun sdl-check ()
+  "Run the SDL3 project's compiler syntax checks."
+  (interactive)
+  (sdl--make "check"))
+
+;;;###autoload
+(defun sdl-clean ()
+  "Remove SDL3 project build artifacts."
+  (interactive)
+  (sdl--make "clean"))
 
 ;; ── LaTeX (AUCTeX) ────────────────────────────────────────────────────────
 (use-package auctex

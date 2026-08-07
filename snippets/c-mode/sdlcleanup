@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: SDL3 cleanup
+# key: sdlcleanup
+# --
+SDL_DestroyTexture(${1:texture});
+SDL_DestroyRenderer(${2:renderer});
+SDL_DestroyWindow(${3:window});
+SDL_Quit();
+$0

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: SDL3 include
+# key: sdlinc
+# --
+#include <SDL3/SDL.h>
+
+$0

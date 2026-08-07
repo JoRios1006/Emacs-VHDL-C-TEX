@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: SDL3 clear and draw color
+# key: sdldraw
+# --
+SDL_SetRenderDrawColor(${1:renderer}, ${2:0}, ${3:0}, ${4:0}, SDL_ALPHA_OPAQUE);
+SDL_RenderClear(${1:renderer});
+$0

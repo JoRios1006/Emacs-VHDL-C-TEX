@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: SDL3 frame timing
+# key: sdlticks
+# --
+const Uint64 ${1:frame_start} = SDL_GetTicks();
+${2:/* Update and render one frame. */}
+const Uint64 ${3:frame_elapsed} = SDL_GetTicks() - ${1:frame_start};
+if (${3:frame_elapsed} < ${4:16}) {
+    SDL_Delay((Uint32)(${4:16} - ${3:frame_elapsed}));
+}
+$0

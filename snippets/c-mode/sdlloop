@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: SDL3 frame loop
+# key: sdlloop
+# --
+bool ${1:running} = true;
+while (${1:running}) {
+    SDL_Event ${2:event};
+    while (SDL_PollEvent(&${2:event})) {
+        if (${2:event}.type == SDL_EVENT_QUIT) {
+            ${1:running} = false;
+        }
+        ${0:/* Handle input here. */}
+    }
+
+    ${3:/* Update game state. */}
+
+    ${4:/* Render frame. */}
+    SDL_RenderPresent(${5:renderer});
+}

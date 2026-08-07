@@ -1,0 +1,53 @@
+# -*- mode: snippet -*-
+# name: SDL3 C project Makefile
+# key: sdlproj
+# --
+# SDL3 C project — requires pkg-config and the SDL3 development package.
+CC       := cc
+CFLAGS   := -std=c17 -Wall -Wextra -Wpedantic -g
+CPPFLAGS := $(shell pkg-config --cflags sdl3 2>/dev/null)
+LDLIBS   := $(shell pkg-config --libs sdl3 2>/dev/null)
+TARGET   := ${1:game}
+SRC_DIR  := ${2:src}
+BUILD    := ${3:build}
+SRCS     := $(wildcard $(SRC_DIR)/*.c)
+OBJS     := $(patsubst $(SRC_DIR)/%.c,$(BUILD)/%.o,$(SRCS))
+DEPS     := $(OBJS:.o=.d)
+
+.PHONY: all run debug release clean check help
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
+
+$(BUILD)/%.o: $(SRC_DIR)/%.c
+	mkdir -p $(BUILD)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -MMD -MP -c $< -o $@
+
+run: $(TARGET)
+	./$(TARGET)
+
+debug: CFLAGS += -O0 -DDEBUG -fsanitize=address,undefined
+debug: LDFLAGS += -fsanitize=address,undefined
+debug: clean all
+
+release: CFLAGS := -std=c17 -Wall -Wextra -O2 -DNDEBUG
+release: clean all
+
+check:
+	$(CC) $(CPPFLAGS) $(CFLAGS) -fsyntax-only $(SRCS)
+
+clean:
+	rm -rf $(BUILD) $(TARGET)
+
+help:
+	@printf "  make         Build $(TARGET)\n"
+	@printf "  make run     Build and run $(TARGET)\n"
+	@printf "  make debug   Sanitized debug build\n"
+	@printf "  make release Optimized build\n"
+	@printf "  make check   Syntax-only check\n"
+	@printf "  make clean   Remove build artifacts\n"
+
+-include $(DEPS)
+$0

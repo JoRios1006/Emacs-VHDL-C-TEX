@@ -41,6 +41,8 @@ All major commands are behind `SPC` in Normal mode.
 - **Evil** — full Vim keybindings via `evil` + `evil-collection`
 - **LSP** — `lsp-mode` with `clangd` (C/C++) and `vhdl_ls` (VHDL)
 - **C / C++** — `cc-mode`, clangd LSP, cmake-mode
+- **SDL3 / C** — SDL3 lifecycle, event loop, rendering, input, textures,
+  timing, logging, and asset snippets; SDL3-aware Makefile templates
 - **VHDL** — `vhdl-mode` (built-in), stutter mode, electric mode, LSP-ready
 - **LaTeX** — AUCTeX, RefTeX, company-auctex, flyspell
 - **Flycheck** — live syntax checking with inline error display
@@ -59,6 +61,43 @@ All major commands are behind `SPC` in Normal mode.
 - `gcc`, `clang-tools` (clangd), `cmake`, `gnumake`
 - `ghdl` — VHDL simulator (for FPGA/simulation workflows)
 - `ripgrep`, `fd`, `ispell`
+
+## SDL3 projects
+
+The SDL3 snippets target **SDL3**, not SDL2. In a C buffer, type a snippet key
+and press `TAB`; useful keys include:
+
+| Key | Expansion |
+|-----|-----------|
+| `sdlmain` | Complete SDL3 window, renderer, event loop, and cleanup program |
+| `sdlinit` / `sdlwindow` / `sdlrenderer` | Initialization building blocks |
+| `sdlevent` / `sdlkey` / `sdlmouse` | SDL3 event handling |
+| `sdldraw` / `sdlrect` / `sdltexture` / `sdlcopy` | Rendering helpers |
+| `sdlloop` / `sdlticks` | Frame loop and frame timing |
+| `sdlcleanup` / `sdlerr` / `sdllog` | Resource cleanup and diagnostics |
+
+For a project Makefile, use `sdlproj` for a multi-file `src/` project or
+`sdlsingle` for a single `main.c`. Both use:
+
+```make
+pkg-config --cflags sdl3
+pkg-config --libs sdl3
+```
+
+The generated targets are `make`, `make run`, `make debug`, `make check`, and
+`make clean`. If SDL3 is installed in a non-standard prefix, set
+`PKG_CONFIG_PATH` before starting Emacs. The `sdlflags` snippet is useful when
+adding SDL3 to an existing Makefile.
+
+SDL3 commands are available through the leader key:
+
+| Key | Command |
+|-----|---------|
+| `SPC d b` | Build nearest Makefile project |
+| `SPC d r` | Build and run |
+| `SPC d d` | Sanitized debug build |
+| `SPC d c` | Syntax check |
+| `SPC d x` | Clean build artifacts |
 
 ## VHDL Language Server
 

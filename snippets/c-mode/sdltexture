@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: SDL3 BMP texture
+# key: sdltexture
+# --
+SDL_Surface *${1:surface} = SDL_LoadBMP("${2:assets/image.bmp}");
+if (!${1:surface}) {
+    SDL_Log("SDL_LoadBMP failed: %s", SDL_GetError());
+    ${0:return EXIT_FAILURE;}
+}
+SDL_Texture *${3:texture} = SDL_CreateTextureFromSurface(${4:renderer}, ${1:surface});
+SDL_DestroySurface(${1:surface});
+if (!${3:texture}) {
+    SDL_Log("SDL_CreateTextureFromSurface failed: %s", SDL_GetError());
+    return EXIT_FAILURE;
+}
+$0

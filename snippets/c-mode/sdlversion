@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: SDL3 compile-time version
+# key: sdlversion
+# --
+SDL_Log("SDL version %d.%d.%d",
+        SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_MICRO_VERSION);
+$0
