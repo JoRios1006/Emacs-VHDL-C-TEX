@@ -1,0 +1,11 @@
+# Emacs package installations and compiled caches
+elpa/
+eln-cache/
+.cache/
+cache/
+
+# Emacs runtime state
+auto-save/
+backups/
+history
+projectile-bookmarks.eld
