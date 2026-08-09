@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Raylib draw texture
+# key: raytexturedraw
+# --
+DrawTextureEx(
+    ${1:texture},
+    (Vector2){${2:0.0f}, ${3:0.0f}},
+    ${4:0.0f},
+    ${5:1.0f},
+    ${0:WHITE}
+);

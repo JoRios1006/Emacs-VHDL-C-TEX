@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Raylib sound setup
+# key: rayaudio
+# --
+InitAudioDevice();
+Sound ${1:sound} = LoadSound("${2:assets/effect.wav}");
+if (${1:sound}.frameCount == 0) {
+    TraceLog(LOG_ERROR, "Could not load sound: %s", "${2:assets/effect.wav}");
+    ${0:return 1;}
+}
+PlaySound(${1:sound});
+$0

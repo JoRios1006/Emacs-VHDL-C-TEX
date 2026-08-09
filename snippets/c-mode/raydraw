@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Raylib drawing frame
+# key: raydraw
+# --
+BeginDrawing();
+ClearBackground(${1:RAYWHITE});
+$0
+EndDrawing();

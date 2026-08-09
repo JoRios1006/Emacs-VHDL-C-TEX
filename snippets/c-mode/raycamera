@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Raylib 2D camera
+# key: raycamera
+# --
+Camera2D ${1:camera} = {
+    .offset = (Vector2){${2:640.0f}, ${3:360.0f}},
+    .target = (Vector2){${4:0.0f}, ${5:0.0f}},
+    .rotation = 0.0f,
+    .zoom = ${6:1.0f}
+};
+$0

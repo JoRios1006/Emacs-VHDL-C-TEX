@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Raylib rectangle
+# key: rayrect
+# --
+Rectangle ${1:rect} = {
+    .x = ${2:100.0f},
+    .y = ${3:100.0f},
+    .width = ${4:200.0f},
+    .height = ${5:100.0f}
+};
+DrawRectangleRec(${1:rect}, ${6:BLUE});
+$0

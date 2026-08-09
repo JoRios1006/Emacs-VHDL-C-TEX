@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Raylib audio cleanup
+# key: rayaudiocleanup
+# --
+UnloadSound(${1:sound});
+CloseAudioDevice();
+$0

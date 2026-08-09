@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Raylib log message
+# key: raylog
+# --
+TraceLog(${1:LOG_INFO}, "${2:value}: %d", ${0:value});

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Raylib include
+# key: rayinc
+# --
+#include "raylib.h"
+
+$0

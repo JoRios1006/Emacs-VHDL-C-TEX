@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Raylib window setup
+# key: raywindow
+# --
+InitWindow(${1:1280}, ${2:720}, "${3:Raylib application}");
+SetTargetFPS(${4:60});
+$0

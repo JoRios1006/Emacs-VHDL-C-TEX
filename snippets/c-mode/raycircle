@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Raylib circle
+# key: raycircle
+# --
+DrawCircle(${1:400}, ${2:300}, ${3:50.0f}, ${4:RED});
+$0

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Raylib mouse input
+# key: raymouse
+# --
+Vector2 ${1:mouse_position} = GetMousePosition();
+if (IsMouseButtonPressed(${2:MOUSE_BUTTON_LEFT})) {
+    ${0:/* Handle click at mouse_position. */}
+}

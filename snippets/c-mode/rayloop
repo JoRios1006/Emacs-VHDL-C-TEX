@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Raylib game loop
+# key: rayloop
+# --
+while (!WindowShouldClose()) {
+    ${1:/* Update. */}
+
+    BeginDrawing();
+    ClearBackground(${2:RAYWHITE});
+    ${0:/* Draw. */}
+    EndDrawing();
+}

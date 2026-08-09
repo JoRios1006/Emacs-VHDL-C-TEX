@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Raylib camera drawing mode
+# key: raycamdraw
+# --
+BeginMode2D(${1:camera});
+${2:/* Draw world-space objects. */}
+EndMode2D();
+$0

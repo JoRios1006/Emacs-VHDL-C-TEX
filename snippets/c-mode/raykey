@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Raylib key pressed
+# key: raykey
+# --
+if (IsKeyPressed(${1:KEY_SPACE})) {
+    ${0:/* Handle one key press. */}
+}

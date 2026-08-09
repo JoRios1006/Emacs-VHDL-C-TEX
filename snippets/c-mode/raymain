@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# name: Raylib application main
+# key: raymain
+# --
+#include "raylib.h"
+#include <stdbool.h>
+
+int main(void)
+{
+    const int screen_width = ${1:1280};
+    const int screen_height = ${2:720};
+
+    InitWindow(screen_width, screen_height, "${3:Raylib application}");
+    SetTargetFPS(${4:60});
+
+    while (!WindowShouldClose()) {
+        ${5:/* Update. */}
+
+        BeginDrawing();
+        ClearBackground(${6:RAYWHITE});
+        ${0:/* Draw. */}
+        EndDrawing();
+    }
+
+    CloseWindow();
+    return 0;
+}

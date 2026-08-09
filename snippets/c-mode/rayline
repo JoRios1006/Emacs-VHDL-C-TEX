@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Raylib line
+# key: rayline
+# --
+DrawLineEx(
+    (Vector2){${1:0.0f}, ${2:0.0f}},
+    (Vector2){${3:100.0f}, ${4:100.0f}},
+    ${5:2.0f},
+    ${0:BLACK}
+);

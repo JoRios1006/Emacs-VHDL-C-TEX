@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Raylib keyboard input
+# key: rayinput
+# --
+if (IsKeyDown(${1:KEY_RIGHT})) {
+    ${2:player}.x += ${3:200.0f} * GetFrameTime();
+}
+if (IsKeyDown(${4:KEY_LEFT})) {
+    ${2:player}.x -= ${3:200.0f} * GetFrameTime();
+}
+$0

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Raylib application cleanup
+# key: raycleanup
+# --
+${1:UnloadTexture(texture);}
+CloseAudioDevice();
+CloseWindow();
+$0

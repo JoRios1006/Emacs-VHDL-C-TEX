@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Raylib pkg-config flags
+# key: rayflags
+# --
+RAY_CFLAGS := $(shell pkg-config --cflags raylib)
+RAY_LIBS   := $(shell pkg-config --libs raylib)
+CPPFLAGS   += $(RAY_CFLAGS)
+LDLIBS     += $(RAY_LIBS)
+$0

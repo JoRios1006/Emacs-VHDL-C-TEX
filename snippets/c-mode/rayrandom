@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Raylib random integer
+# key: rayrandom
+# --
+int ${1:value} = GetRandomValue(${2:0}, ${3:100});
+$0

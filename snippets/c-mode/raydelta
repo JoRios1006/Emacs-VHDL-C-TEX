@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Raylib delta-time update
+# key: raydelta
+# --
+const float ${1:delta_time} = GetFrameTime();
+${2:position}.x += ${3:velocity}.x * ${1:delta_time};
+${2:position}.y += ${3:velocity}.y * ${1:delta_time};
+$0

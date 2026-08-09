@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Raylib texture load
+# key: raytexture
+# --
+Texture2D ${1:texture} = LoadTexture("${2:assets/image.png}");
+if (${1:texture}.id == 0) {
+    TraceLog(LOG_ERROR, "Could not load texture: %s", "${2:assets/image.png}");
+    ${0:return 1;}
+}
+$0

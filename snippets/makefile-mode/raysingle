@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# name: Raylib single-file Makefile
+# key: raysingle
+# --
+CC       := cc
+CFLAGS   := -std=c17 -Wall -Wextra -Wpedantic -g
+RAY_CFLAGS := $(shell pkg-config --cflags raylib 2>/dev/null)
+RAY_LIBS   := $(shell pkg-config --libs raylib 2>/dev/null)
+TARGET   := ${1:game}
+SOURCE   := ${2:main.c}
+
+.PHONY: all run check clean
+
+all: $(TARGET)
+
+$(TARGET): $(SOURCE)
+	$(CC) $(RAY_CFLAGS) $(CFLAGS) $< $(RAY_LIBS) -o $@
+
+run: $(TARGET)
+	./$(TARGET)
+
+check:
+	$(CC) $(RAY_CFLAGS) $(CFLAGS) -fsyntax-only $(SOURCE)
+
+clean:
+	rm -f $(TARGET)
+
+$0

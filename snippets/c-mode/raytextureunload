@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Raylib texture unload
+# key: raytextureunload
+# --
+UnloadTexture(${1:texture});
+$0

@@ -43,6 +43,8 @@ All major commands are behind `SPC` in Normal mode.
 - **C / C++** — `cc-mode`, clangd LSP, cmake-mode
 - **SDL3 / C** — SDL3 lifecycle, event loop, rendering, input, textures,
   timing, logging, and asset snippets; SDL3-aware Makefile templates
+- **Raylib / C** — Raylib window lifecycle, drawing, input, textures, cameras,
+  collision, audio, timing, logging, and Raylib-aware Makefile templates
 - **VHDL** — `vhdl-mode` (built-in), stutter mode, electric mode, LSP-ready
 - **LaTeX** — AUCTeX, RefTeX, company-auctex, flyspell
 - **Flycheck** — live syntax checking with inline error display
@@ -60,6 +62,7 @@ All major commands are behind `SPC` in Normal mode.
 - `emacs` (30.x)
 - `gcc`, `clang-tools` (clangd), `cmake`, `gnumake`
 - `ghdl` — VHDL simulator (for FPGA/simulation workflows)
+- `raylib`, `pkg-config` — Raylib C development and Makefile discovery
 - `ripgrep`, `fd`, `ispell`
 
 ## SDL3 projects
@@ -98,6 +101,43 @@ SDL3 commands are available through the leader key:
 | `SPC d d` | Sanitized debug build |
 | `SPC d c` | Syntax check |
 | `SPC d x` | Clean build artifacts |
+
+## Raylib projects
+
+The Raylib snippets target current Raylib C APIs. In a C buffer, type a
+snippet key and press `TAB`; useful keys include:
+
+| Key | Expansion |
+|-----|-----------|
+| `raymain` | Complete Raylib window, game loop, drawing, and cleanup program |
+| `raywindow` / `rayloop` / `raydraw` | Window and frame-loop building blocks |
+| `rayinput` / `raykey` / `raymouse` | Keyboard and mouse input |
+| `rayrect` / `raycircle` / `rayline` / `raytext` | 2D drawing helpers |
+| `raytexture` / `raytexturedraw` | Texture loading and drawing |
+| `raycamera` / `raycamdraw` | 2D camera setup and world drawing |
+| `raycollision` / `raydelta` | Collision and frame-independent movement |
+| `rayaudio` / `rayaudiocleanup` | Sound initialization and cleanup |
+| `raycleanup` / `raylog` | Resource cleanup and diagnostics |
+
+Use `rayproj` for a multi-file `src/` project or `raysingle` for a single
+`main.c`. Both use:
+
+```make
+pkg-config --cflags raylib
+pkg-config --libs raylib
+```
+
+Available targets are `make`, `make run`, `make debug`, `make release`,
+`make check`, and `make clean`. Raylib commands use the nearest ancestor
+`Makefile`:
+
+| Key | Command |
+|-----|---------|
+| `SPC r b` | Build nearest Raylib Makefile project |
+| `SPC r r` | Build and run |
+| `SPC r d` | Sanitized debug build |
+| `SPC r c` | Syntax check |
+| `SPC r x` | Clean build artifacts |
 
 ## VHDL Language Server
 

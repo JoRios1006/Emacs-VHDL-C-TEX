@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Raylib draw text
+# key: raytext
+# --
+DrawText("${1:Hello, Raylib}!", ${2:20}, ${3:20}, ${4:24}, ${5:DARKGRAY});
+$0

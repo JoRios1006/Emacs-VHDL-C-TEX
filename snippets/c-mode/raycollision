@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Raylib rectangle collision
+# key: raycollision
+# --
+if (CheckCollisionRecs(${1:player}.bounds, ${2:enemy}.bounds)) {
+    ${0:/* Handle collision. */}
+}

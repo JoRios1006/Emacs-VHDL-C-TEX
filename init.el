@@ -222,6 +222,14 @@
     "dc" '(sdl-check                   :which-key "syntax check")
     "dx" '(sdl-clean                   :which-key "clean")
 
+    ;; Raylib project
+    "r"  '(:ignore t :which-key "Raylib")
+    "rb" '(ray-build                   :which-key "build")
+    "rr" '(ray-run                     :which-key "build+run")
+    "rd" '(ray-debug                   :which-key "debug + sanitizers")
+    "rc" '(ray-check                   :which-key "syntax check")
+    "rx" '(ray-clean                   :which-key "clean")
+
     ;; Open / misc
     "o"  '(:ignore t :which-key "open")
     "oe" '(eshell                      :which-key "eshell")
@@ -493,6 +501,50 @@ Signal a user error when none can be found."
   "Remove SDL3 project build artifacts."
   (interactive)
   (sdl--make "clean"))
+
+;; ── Raylib build helpers ──────────────────────────────────────────────────
+;; Raylib snippets use pkg-config and the nearest Makefile, just like the
+;; SDL3 helpers above, but remain separate so both project types can coexist.
+
+(defun ray--project-directory ()
+  "Return the nearest directory containing a Makefile."
+  (or (locate-dominating-file default-directory "Makefile")
+      (user-error "No Makefile found above %s" default-directory)))
+
+(defun ray--make (target)
+  "Run make TARGET from the nearest Raylib project directory."
+  (let ((default-directory (ray--project-directory)))
+    (compile (format "make %s" target))))
+
+;;;###autoload
+(defun ray-build ()
+  "Build the Raylib project with its default Makefile target."
+  (interactive)
+  (ray--make "all"))
+
+;;;###autoload
+(defun ray-run ()
+  "Build and run the Raylib project."
+  (interactive)
+  (ray--make "run"))
+
+;;;###autoload
+(defun ray-debug ()
+  "Build the Raylib project with sanitizers and debug flags."
+  (interactive)
+  (ray--make "debug"))
+
+;;;###autoload
+(defun ray-check ()
+  "Run the Raylib project's compiler syntax checks."
+  (interactive)
+  (ray--make "check"))
+
+;;;###autoload
+(defun ray-clean ()
+  "Remove Raylib project build artifacts."
+  (interactive)
+  (ray--make "clean"))
 
 ;; ── LaTeX (AUCTeX) ────────────────────────────────────────────────────────
 (use-package auctex

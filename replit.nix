@@ -1,5 +1,7 @@
 {pkgs}: {
   deps = [
+    pkgs.pkg-config
+    pkgs.raylib
     pkgs.vhdl-ls
     pkgs.ispell
     pkgs.fd
