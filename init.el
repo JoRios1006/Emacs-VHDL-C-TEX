@@ -230,6 +230,15 @@
     "rc" '(ray-check                   :which-key "syntax check")
     "rx" '(ray-clean                   :which-key "clean")
 
+    ;; Code folding
+    "z"  '(:ignore t :which-key "folding")
+    "za" '(my-fold-toggle               :which-key "toggle fold")
+    "zc" '(my-fold-close                :which-key "close fold")
+    "zo" '(my-fold-open                 :which-key "open fold")
+    "zM" '(my-fold-hide-all             :which-key "close all")
+    "zR" '(my-fold-show-all             :which-key "open all")
+    "zl" '(my-fold-hide-level           :which-key "hide level")
+
     ;; Open / misc
     "o"  '(:ignore t :which-key "open")
     "oe" '(eshell                      :which-key "eshell")
@@ -237,7 +246,19 @@
     "."  '(find-file                   :which-key "find file")
     "SPC" '(execute-extended-command   :which-key "M-x")
     "q"  '(:ignore t :which-key "quit")
-    "qq" '(save-buffers-kill-emacs     :which-key "quit")))
+    "qq" '(save-buffers-kill-emacs     :which-key "quit"))
+
+  ;; Familiar Evil/Vim fold keys.  SPC z remains available as a discoverable
+  ;; alternative through which-key.
+  (general-define-key
+   :states '(normal visual)
+   :keymaps 'override
+   "za" #'my-fold-toggle
+   "zc" #'my-fold-close
+   "zo" #'my-fold-open
+   "zM" #'my-fold-hide-all
+   "zR" #'my-fold-show-all
+   "zl" #'my-fold-hide-level))
 
 ;; ── Which-key ─────────────────────────────────────────────────────────────
 (use-package which-key
@@ -307,6 +328,105 @@
 
 (use-package yasnippet-snippets
   :after yasnippet)
+
+;; ── Code folding ───────────────────────────────────────────────────────────
+;; hideshow is built into Emacs and folds structural blocks in C/C++.
+(use-package hideshow
+  :ensure nil
+  :commands (hs-minor-mode hs-toggle-hiding hs-hide-block hs-show-block
+                            hs-hide-all hs-show-all hs-hide-level)
+  :hook ((c-mode                 . hs-minor-mode)
+         (c++-mode               . hs-minor-mode))
+  :custom
+  (hs-hide-comments-when-hiding-all nil)
+  (hs-isearch-open t)
+  :config
+  (defun my-hs-mode-setup ()
+    "Allow nested folds and keep folding state local to each buffer."
+    (setq-local hs-allow-nesting t))
+  (add-hook 'hs-minor-mode-hook #'my-hs-mode-setup))
+
+;; outline-minor-mode gives VHDL and Makefiles useful heading-based folding:
+;; entities/architectures/processes for VHDL, and targets for Makefiles.
+(use-package outline
+  :ensure nil
+  :commands (outline-minor-mode outline-cycle outline-hide-entry
+                                 outline-show-entry outline-hide-sublevels
+                                 outline-show-all)
+  :config
+  (defun my-vhdl-outline-setup ()
+    "Configure foldable structural headings for VHDL buffers."
+    (setq-local outline-regexp
+                "^[ \t]*\\(architecture\\|entity\\|package\\|process\\|function\\|procedure\\|component\\|configuration\\|--[ \t]*[-=]+\\)\\_>")
+    (outline-minor-mode 1))
+
+  (defun my-makefile-outline-setup ()
+    "Configure foldable target headings for Makefiles."
+    (setq-local outline-regexp
+                "^[ \t]*\\(?:[[:alnum:]_.-]+\\):")
+    (outline-minor-mode 1))
+
+  (defun my-tex-fold-setup ()
+    "Enable AUCTeX folding when its optional TeX-fold library is loaded."
+    (when (fboundp 'TeX-fold-mode)
+      (TeX-fold-mode 1)))
+
+  (add-hook 'vhdl-mode-hook #'my-vhdl-outline-setup)
+  (add-hook 'makefile-gmake-mode-hook #'my-makefile-outline-setup)
+  (add-hook 'makefile-bsdmake-mode-hook #'my-makefile-outline-setup)
+
+  (defun my-fold-toggle ()
+    "Toggle the fold at point for the current major mode."
+    (interactive)
+    (cond
+     ((bound-and-true-p hs-minor-mode) (hs-toggle-hiding))
+     ((bound-and-true-p outline-minor-mode) (outline-cycle))
+     ((fboundp 'TeX-fold-dwim) (TeX-fold-dwim))
+     (t (user-error "No folding support in %s" major-mode))))
+
+  (defun my-fold-close ()
+    "Close the fold at point."
+    (interactive)
+    (cond
+     ((bound-and-true-p hs-minor-mode) (hs-hide-block))
+     ((bound-and-true-p outline-minor-mode) (outline-hide-entry))
+     ((fboundp 'TeX-fold-dwim) (TeX-fold-dwim))
+     (t (user-error "No folding support in %s" major-mode))))
+
+  (defun my-fold-open ()
+    "Open the fold at point."
+    (interactive)
+    (cond
+     ((bound-and-true-p hs-minor-mode) (hs-show-block))
+     ((bound-and-true-p outline-minor-mode) (outline-show-entry))
+     ((fboundp 'TeX-fold-dwim) (TeX-fold-dwim))
+     (t (user-error "No folding support in %s" major-mode))))
+
+  (defun my-fold-hide-all ()
+    "Close all folds in the current buffer."
+    (interactive)
+    (cond
+     ((bound-and-true-p hs-minor-mode) (hs-hide-all))
+     ((bound-and-true-p outline-minor-mode) (outline-hide-sublevels 1))
+     ((fboundp 'TeX-fold-buffer) (TeX-fold-buffer))
+     (t (user-error "No folding support in %s" major-mode))))
+
+  (defun my-fold-show-all ()
+    "Open all folds in the current buffer."
+    (interactive)
+    (cond
+     ((bound-and-true-p hs-minor-mode) (hs-show-all))
+     ((bound-and-true-p outline-minor-mode) (outline-show-all))
+     ((fboundp 'TeX-fold-clearout-buffer) (TeX-fold-clearout-buffer))
+     (t (user-error "No folding support in %s" major-mode))))
+
+  (defun my-fold-hide-level ()
+    "Hide everything below the first outline level."
+    (interactive)
+    (cond
+     ((bound-and-true-p hs-minor-mode) (hs-hide-level 1))
+     ((bound-and-true-p outline-minor-mode) (outline-hide-sublevels 1))
+     (t (user-error "No folding support in %s" major-mode)))))
 
 ;; ── Flycheck ───────────────────────────────────────────────────────────────
 (use-package flycheck
@@ -553,7 +673,9 @@ Signal a user error when none can be found."
          (LaTeX-mode . flycheck-mode)
          (LaTeX-mode . flyspell-mode)
          (LaTeX-mode . LaTeX-math-mode)
-         (LaTeX-mode . turn-on-reftex))
+         (LaTeX-mode . turn-on-reftex)
+         ;; AUCTeX folds environments/macros with its own TeX-fold support.
+         (LaTeX-mode . my-tex-fold-setup))
   :custom
   (TeX-auto-save          t)
   (TeX-parse-self         t)

@@ -33,6 +33,7 @@ All major commands are behind `SPC` in Normal mode.
 | `SPC g` | Magit (git) |
 | `SPC l` | LSP (go-to-def, rename, format…) |
 | `SPC t` | Toggles (focus mode, line numbers…) |
+| `SPC z` | Code folding |
 | `SPC h` | Help |
 | `SPC SPC` | `M-x` (command palette) |
 
@@ -58,6 +59,8 @@ All major commands are behind `SPC` in Normal mode.
 - **Doom One theme** + doom-modeline
 - **Olivetti** — distraction-free focus mode (`SPC t f`)
 - **Which-key** — popup showing available key bindings
+- **Code folding** — structural folds for C/C++, heading folds for VHDL and
+  Makefiles, and AUCTeX folds for LaTeX
 
 ## System dependencies (installed via Nix)
 
@@ -103,6 +106,25 @@ SDL3 commands are available through the leader key:
 | `SPC d d` | Sanitized debug build |
 | `SPC d c` | Syntax check |
 | `SPC d x` | Clean build artifacts |
+
+## Code folding
+
+Folding is available with familiar Evil/Vim keys:
+
+| Key | Action |
+|-----|--------|
+| `za` | Toggle fold at point |
+| `zc` | Close fold |
+| `zo` | Open fold |
+| `zM` | Close all folds |
+| `zR` | Open all folds |
+| `zl` | Hide below the first outline level |
+
+The same commands are also available under `SPC z` and appear in which-key.
+C/C++ use structural brace folding. VHDL folds common declarations such as
+entities, architectures, processes, packages, functions, and procedures.
+Makefiles fold target sections. LaTeX uses AUCTeX's environment/macro folding
+when the TeX-fold library is available.
 
 ## Raylib projects
 
