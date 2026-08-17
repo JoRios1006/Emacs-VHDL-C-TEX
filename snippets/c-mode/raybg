@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: Raylib stretched background
+# key: raybg
+# --
+static void ${1:DrawBackgroundStretched}(Texture2D texture,
+                                          int width, int height)
+{
+    Rectangle source = {
+        0.0f, 0.0f, (float)texture.width, (float)texture.height
+    };
+    Rectangle destination = {0.0f, 0.0f, (float)width, (float)height};
+    DrawTexturePro(texture, source, destination, (Vector2){0}, 0.0f, WHITE);
+}

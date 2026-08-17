@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# name: visual novel scene node
+# key: vnscene
+# --
+typedef struct {
+    int id;
+    const char *dialogue;
+    const char *speaker;
+    const char *background_path;
+    int next_scene;
+    ${1:/* Add choices/events here. */}
+} SceneNode;
+
+static const SceneNode ${2:scenes}[] = {
+    {
+        .id = ${3:0},
+        .dialogue = "${4:Dialogue text}",
+        .speaker = ${5:NULL},
+        .background_path = "${6:resources/background.png}",
+        .next_scene = ${7:1}
+    },
+};

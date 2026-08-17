@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: Raylib application context
+# key: raycontext
+# --
+typedef struct {
+    GameState state;
+    Vector2 mouse;
+    float delta_time;
+    int frame;
+    ${1:/* Add durable game state here. */}
+} AppContext;
+
+static AppContext ${2:app} = {
+    .state = ${3:STATE_MENU},
+};
+$0

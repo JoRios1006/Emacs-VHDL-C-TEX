@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Raylib music playback
+# key: raymusic
+# --
+Music ${1:music} = LoadMusicStream("${2:resources/music.ogg}");
+if (${1:music}.ctxData == NULL) {
+    TraceLog(LOG_ERROR, "Could not load music: %s", "${2:resources/music.ogg}");
+    ${0:return 1;}
+}
+PlayMusicStream(${1:music});
+SetMusicVolume(${1:music}, ${3:0.8f});
+$0

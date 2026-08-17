@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: Raylib centered text helper
+# key: raycenter
+# --
+static void ${1:DrawCenteredText}(Font font, const char *text,
+                                  Rectangle bounds, float font_size,
+                                  float spacing, Color color)
+{
+    Vector2 size = MeasureTextEx(font, text, font_size, spacing);
+    Vector2 position = {
+        bounds.x + (bounds.width - size.x) / 2.0f,
+        bounds.y + (bounds.height - size.y) / 2.0f
+    };
+    DrawTextEx(font, text, position, font_size, spacing, color);
+}

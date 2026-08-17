@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: visual novel choice
+# key: vnchoice
+# --
+typedef struct {
+    const char *text;
+    int destination;
+    bool (*is_available)(void);
+    void (*on_choose)(void);
+} Choice;
+
+static const Choice ${1:choices}[] = {
+    {
+        .text = "${2:Choose this}",
+        .destination = ${3:1},
+        .is_available = ${4:NULL},
+        .on_choose = ${5:NULL}
+    },
+};

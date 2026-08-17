@@ -9,3 +9,6 @@ auto-save/
 backups/
 history
 projectile-bookmarks.eld
+
+# User-uploaded reference files and assets
+attached_assets/

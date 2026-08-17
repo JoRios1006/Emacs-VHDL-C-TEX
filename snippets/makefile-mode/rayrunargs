@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Raylib run with arguments
+# key: rayrunargs
+# --
+run: $(TARGET)
+	./$(TARGET) ${1:--debug} ${0:--windowed}

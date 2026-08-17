@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: Raylib image button with click result
+# key: raybutton
+# --
+static bool ${1:DrawImageButton}(Texture2D normal, Texture2D hover,
+                                  Rectangle bounds, Vector2 mouse_position)
+{
+    bool is_hovered = CheckCollisionPointRec(mouse_position, bounds);
+    Texture2D texture = is_hovered ? hover : normal;
+    Rectangle source = {
+        0.0f, 0.0f, (float)texture.width, (float)texture.height
+    };
+    DrawTexturePro(texture, source, bounds, (Vector2){0}, 0.0f, WHITE);
+    return is_hovered && IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+}

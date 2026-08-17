@@ -45,6 +45,8 @@ All major commands are behind `SPC` in Normal mode.
   timing, logging, and asset snippets; SDL3-aware Makefile templates
 - **Raylib / C** — Raylib window lifecycle, drawing, input, textures, cameras,
   collision, audio, timing, logging, and Raylib-aware Makefile templates
+- **Visual novel patterns** — scene nodes, choices, flags, typewriter text,
+  screen dispatch, resource bundles, UI widgets, and transitions
 - **VHDL** — `vhdl-mode` (built-in), stutter mode, electric mode, LSP-ready
 - **LaTeX** — AUCTeX, RefTeX, company-auctex, flyspell
 - **Flycheck** — live syntax checking with inline error display
@@ -138,6 +140,52 @@ Available targets are `make`, `make run`, `make debug`, `make release`,
 | `SPC r d` | Sanitized debug build |
 | `SPC r c` | Syntax check |
 | `SPC r x` | Clean build artifacts |
+
+## Patterns from the current Raylib game
+
+The uploaded game source is intentionally ignored by Git through
+`attached_assets/`. Its architecture suggests a few patterns that are now
+available as snippets:
+
+| Key | Pattern |
+|-----|---------|
+| `raystate` / `rayscreen` / `raygoto` | Validated game states and dispatch table |
+| `raycontext` | One application context instead of scattered globals |
+| `rayresources` / `rayloadresources` / `rayunloadresources` | Matched asset ownership |
+| `raycenter` / `raybg` | Reusable drawing helpers |
+| `raybutton` / `rayslider` / `raytoggle` | UI widgets with input handling |
+| `rayfade` / `raymusic` | Transitions and audio lifecycle |
+| `vnscene` / `vnchoice` / `vntype` / `vnflag` | Visual-novel data and progression |
+| `rayassets` | Makefile asset-directory validation |
+| `rayrunargs` | Makefile run target with configurable arguments |
+
+### Source review notes
+
+The uploaded file is not modified or tracked. Before using it as the long-term
+base, I recommend these small cleanups:
+
+1. Move the `NodoEscena` and `OpcionDecision` typedefs above the TODO
+   prototypes that use them, or add forward declarations.
+2. Keep resource ownership symmetric: every successful load should have one
+   matching unload. The current `UnloadResources` unloads `marcoTexture` twice.
+3. Replace scattered mutable globals with an `AppContext`/game-state struct
+   gradually; this makes save/load, testing, and adding screens much easier.
+4. Let screen update functions receive a context pointer instead of relying on
+   global state. A table of function pointers can remain, but become
+   `void (*ScreenFunc)(AppContext *)`.
+5. Use designated initializers for sliders and toggles so future struct fields
+   cannot silently change their meaning:
+
+   ```c
+   static Slider sldMaster = {
+       .label = "MASTER VOLUME",
+       .value = 1.0f
+   };
+   ```
+
+6. Keep content data separate from rendering code. Scene nodes, choices,
+   flags, localization keys, and save data will eventually be easier to
+   validate and edit outside the main C file.
 
 ## VHDL Language Server
 

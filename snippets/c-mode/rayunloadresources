@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: Raylib resource unload function
+# key: rayunloadresources
+# --
+static void ${1:UnloadResources}(Resources *resources)
+{
+    UnloadTexture(resources->${2:background});
+    UnloadTexture(resources->${3:player_texture});
+    UnloadFont(resources->${4:font});
+    UnloadSound(resources->${5:click_sound});
+    UnloadMusicStream(resources->${6:music});
+    *resources = (Resources){0};
+}

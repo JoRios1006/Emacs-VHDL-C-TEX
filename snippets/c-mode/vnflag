@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: visual novel string flag
+# key: vnflag
+# --
+#define MAX_FLAGS ${1:128}
+#define MAX_FLAG_LENGTH ${2:64}
+
+typedef struct {
+    char names[MAX_FLAGS][MAX_FLAG_LENGTH];
+    size_t count;
+} FlagSet;
+
+static bool ${3:HasFlag}(const FlagSet *flags, const char *name)
+{
+    for (size_t i = 0; i < flags->count; i++) {
+        if (strcmp(flags->names[i], name) == 0) {
+            return true;
+        }
+    }
+    return false;
+}

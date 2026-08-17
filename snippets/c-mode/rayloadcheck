@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Raylib checked texture load
+# key: rayloadcheck
+# --
+${1:texture} = LoadTexture("${2:resources/image.png}");
+if (${1:texture}.id == 0) {
+    TraceLog(LOG_ERROR, "Failed to load texture: %s", "${2:resources/image.png}");
+    ${0:return false;}
+}

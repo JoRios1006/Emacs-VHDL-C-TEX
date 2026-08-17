@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Raylib game state enum
+# key: raystate
+# --
+typedef enum {
+    ${1:STATE_MENU},
+    ${2:STATE_GAME},
+    ${3:STATE_PAUSE},
+    ${0:STATE_COUNT}
+} GameState;

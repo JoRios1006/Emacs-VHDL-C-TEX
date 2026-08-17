@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: Raylib fade transition
+# key: rayfade
+# --
+typedef struct {
+    float elapsed;
+    float duration;
+    bool active;
+} FadeTransition;
+
+static FadeTransition ${1:fade} = {0};
+
+${1:fade}.elapsed += GetFrameTime();
+float ${2:fade_alpha} = ${1:fade}.elapsed / ${1:fade}.duration;
+if (${2:fade_alpha} < 0.0f) ${2:fade_alpha} = 0.0f;
+if (${2:fade_alpha} > 1.0f) ${2:fade_alpha} = 1.0f;
+DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(),
+              Fade(${3:BLACK}, ${2:fade_alpha}));
+$0

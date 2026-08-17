@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: Raylib resource bundle
+# key: rayresources
+# --
+typedef struct {
+    Texture2D ${1:background};
+    Texture2D ${2:player_texture};
+    Font ${3:font};
+    Sound ${4:click_sound};
+    Music ${5:music};
+} Resources;
+
+static Resources ${6:resources} = {0};
+$0

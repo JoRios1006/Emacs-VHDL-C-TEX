@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Raylib toggle widget
+# key: raytoggle
+# --
+Rectangle ${1:box} = {${2:600.0f}, ${3:200.0f}, ${4:40.0f}, ${5:30.0f}};
+DrawRectangleRec(${1:box}, ${6:value} ? GOLD : GRAY);
+if (CheckCollisionPointRec(GetMousePosition(), ${1:box}) &&
+    IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+    ${6:value} = !${6:value};
+}
+$0

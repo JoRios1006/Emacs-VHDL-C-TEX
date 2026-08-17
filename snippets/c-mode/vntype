@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: visual novel typewriter state
+# key: vntype
+# --
+typedef struct {
+    const char *text;
+    size_t visible_characters;
+    float elapsed;
+    float seconds_per_character;
+    bool finished;
+} Typewriter;
+
+static Typewriter ${1:typewriter} = {
+    .text = ${2:text},
+    .seconds_per_character = ${3:0.03f}
+};
+$0

@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: Raylib asset directory check
+# key: rayassets
+# --
+ASSET_DIR ?= ${1:resources}
+
+check-assets:
+	@test -d $(ASSET_DIR) || { echo "Missing asset directory: $(ASSET_DIR)" >&2; exit 1; }
+	@find $(ASSET_DIR) -type f -print >/dev/null
+	@echo "Assets found in $(ASSET_DIR)"
+
+.PHONY: check-assets
+$0

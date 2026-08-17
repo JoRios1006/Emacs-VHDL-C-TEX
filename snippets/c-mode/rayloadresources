@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: Raylib resource load function
+# key: rayloadresources
+# --
+static bool ${1:LoadResources}(Resources *resources)
+{
+    *resources = (Resources){0};
+    ${2:resources->background} = LoadTexture("${3:resources/background.png}");
+    if (${2:resources->background}.id == 0) {
+        TraceLog(LOG_ERROR, "Could not load background");
+        return false;
+    }
+    ${0:return true;}
+}

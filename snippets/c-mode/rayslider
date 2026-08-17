@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: Raylib slider value update
+# key: rayslider
+# --
+Rectangle ${1:track} = {
+    ${2:100.0f}, ${3:200.0f}, ${4:400.0f}, ${5:8.0f}
+};
+if (CheckCollisionPointRec(GetMousePosition(), ${1:track}) &&
+    IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+    ${6:value} = (GetMousePosition().x - ${1:track}.x) / ${1:track}.width;
+    if (${6:value} < 0.0f) ${6:value} = 0.0f;
+    if (${6:value} > 1.0f) ${6:value} = 1.0f;
+}
+DrawRectangleRec(${1:track}, GRAY);
+DrawRectangleRec(
+    (Rectangle){${1:track}.x, ${1:track}.y,
+                ${1:track}.width * ${6:value}, ${1:track}.height},
+    GOLD
+);
+$0

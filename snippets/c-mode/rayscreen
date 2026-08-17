@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Raylib screen dispatch table
+# key: rayscreen
+# --
+typedef void (*ScreenFunc)(void);
+
+static const ScreenFunc ${1:screens}[${2:SCREEN_COUNT}] = {
+    [${3:SCREEN_MENU}] = ${4:UpdateDrawMenu},
+    [${5:SCREEN_GAME}] = ${6:UpdateDrawGame},
+    ${0:[STATE_PAUSE] = UpdateDrawPause,}
+};
