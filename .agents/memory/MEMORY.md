@@ -1,0 +1,1 @@
+- [Emacs batch validation](emacs-batch-validation.md) — batch mode skips the normal init; load early-init.el and init.el explicitly for reliable checks.
