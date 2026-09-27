@@ -19,6 +19,10 @@
         ("nongnu" . "https://elpa.nongnu.org/packages/")
         ("melpa"  . "https://melpa.org/packages/")))
 (package-initialize)
+;; Load locally cached archive metadata so use-package can install newly
+;; referenced packages without refreshing MELPA on every startup.
+(unless (bound-and-true-p package-archive-contents)
+  (package-read-all-archive-contents))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -760,6 +764,7 @@ Signal a user error when none can be found."
 ;; normally without embedding credentials in this file.
 (use-package gptel
   :if (getenv "GEMINI_API_KEY")
+  :demand t
   :commands (gptel gptel-send gptel-menu)
   :custom
   (gptel-model 'gemini-3.6-flash)
@@ -780,6 +785,7 @@ Signal a user error when none can be found."
 
 (use-package minuet
   :if (getenv "GEMINI_API_KEY")
+  :demand t
   :bind (("M-i" . minuet-show-suggestion))
   :config
   (setq minuet-provider 'openai-compatible
