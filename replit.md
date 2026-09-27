@@ -56,11 +56,13 @@ All major commands are behind `SPC` in Normal mode.
 - **Projectile** — project management (`SPC p`)
 - **Company** — in-buffer completion with company-box UI
 - **Vertico / Orderless / Consult** — minibuffer completion
-- **Doom One theme** + doom-modeline
+- **Doom Solarized High Contrast theme** + doom-modeline
 - **Olivetti** — distraction-free focus mode (`SPC t f`)
 - **Which-key** — popup showing available key bindings
 - **Code folding** — structural folds for C/C++, heading folds for VHDL and
   Makefiles, and AUCTeX folds for LaTeX
+- **AI assistance** — optional Gemini integration through `gptel` and
+  `minuet`, enabled only when `GEMINI_API_KEY` exists in Replit Secrets
 
 ## System dependencies (installed via Nix)
 
@@ -125,6 +127,20 @@ C/C++ use structural brace folding. VHDL folds common declarations such as
 entities, architectures, processes, packages, functions, and procedures.
 Makefiles fold target sections. LaTeX uses AUCTeX's environment/macro folding
 when the TeX-fold library is available.
+
+## AI assistance
+
+When `GEMINI_API_KEY` is configured as a Replit Secret, the optional Gemini
+tools are enabled:
+
+| Key | Action |
+|-----|--------|
+| `SPC a a` | Open a gptel chat buffer |
+| `SPC a s` | Send the current context to Gemini |
+| `SPC a m` | Open the gptel menu |
+| `M-i` | Show a Minuet inline completion |
+
+The key is intentionally not stored in `init.el`, uploaded files, or Git.
 
 ## Raylib projects
 

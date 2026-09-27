@@ -66,7 +66,8 @@
   :config
   (setq doom-themes-enable-bold   t
         doom-themes-enable-italic t)
-  (load-theme 'doom-one t)
+  (setq doom-themes-solarized-brighter-comments t)
+  (load-theme 'doom-solarized-dark-high-contrast t)
   (doom-themes-visual-bell-config)
   (doom-themes-org-config))
 
@@ -752,6 +753,42 @@ Signal a user error when none can be found."
   (dimmer-configure-magit)
   (dimmer-mode t)
   :custom (dimmer-fraction 0.25))
+
+;; ── AI assistance: Gemini through gptel and minuet ─────────────────────────
+;; The API key must live in Replit Secrets as GEMINI_API_KEY. These packages
+;; stay inactive when the secret is absent, so a fresh clone still starts
+;; normally without embedding credentials in this file.
+(use-package gptel
+  :if (getenv "GEMINI_API_KEY")
+  :commands (gptel gptel-send gptel-menu)
+  :custom
+  (gptel-model 'gemini-3.6-flash)
+  :config
+  (setq gptel-backend
+        (gptel-make-openai
+         "Gemini-OAI"
+         :host "generativelanguage.googleapis.com"
+         :endpoint "/v1beta/openai/chat/completions"
+         :stream t
+         :key (getenv "GEMINI_API_KEY")
+         :models '(gemini-3.6-flash)))
+  (leader-def
+    "a"  '(:ignore t :which-key "AI")
+    "aa" '(gptel       :which-key "chat buffer")
+    "as" '(gptel-send  :which-key "send to AI")
+    "am" '(gptel-menu  :which-key "gptel menu")))
+
+(use-package minuet
+  :if (getenv "GEMINI_API_KEY")
+  :bind (("M-i" . minuet-show-suggestion))
+  :config
+  (setq minuet-provider 'openai-compatible
+        minuet-openai-compatible-options
+        `(:end-point
+          "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+          :api-key ,(getenv "GEMINI_API_KEY")
+          :model "gemini-3.6-flash"
+          :name "Gemini")))
 
 ;; Show git diffs in the gutter
 (use-package git-gutter
