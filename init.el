@@ -246,6 +246,8 @@
     ;; QEMU
     "e"  '(:ignore t :which-key "emulation")
     "er" '(qemu-run                     :which-key "run QEMU")
+    "ex" '(qemu-x86_64-os-run           :which-key "run x86_64 OS")
+    "ed" '(qemu-x86_64-os-debug         :which-key "debug x86_64 OS")
 
     ;; Lua scripting and Busted tests
     "u"  '(:ignore t :which-key "Lua")
@@ -866,6 +868,72 @@ Signal a user error when none can be found."
     (compile (format "%s %s"
                      (shell-quote-argument executable)
                      arguments))))
+
+;; An interactive terminal is needed for OS serial input and QEMU's monitor.
+(defconst qemu-x86_64-os-default-arguments
+  '("-machine" "q35"
+    "-cpu" "max"
+    "-m" "256M"
+    "-smp" "1"
+    "-display" "none"
+    "-serial" "mon:stdio"
+    "-no-reboot"
+    "-no-shutdown")
+  "Default machine and console options for x86_64 OS development.")
+
+(defun qemu--unique-term-name (base-name)
+  "Return an unused terminal process name based on BASE-NAME."
+  (let ((name base-name)
+        (index 1))
+    (while (get-buffer (format "*%s*" name))
+      (setq index (1+ index)
+            name (format "%s<%d>" base-name index)))
+    name))
+
+(defun qemu--start-x86_64-os-terminal (arguments)
+  "Start qemu-system-x86_64 with ARGUMENTS in an interactive terminal."
+  (require 'term)
+  (let* ((executable
+          (or (executable-find "qemu-system-x86_64")
+              (user-error "qemu-system-x86_64 is not installed or not on PATH")))
+         (name (qemu--unique-term-name "QEMU x86_64 OS"))
+         (buffer (apply #'make-term name executable nil arguments)))
+    (pop-to-buffer buffer)
+    (with-current-buffer buffer
+      (term-char-mode))
+    buffer))
+
+(defun qemu--x86_64-os-boot-arguments (boot-arguments)
+  "Split the user-provided BOOT-ARGUMENTS using shell-style quoting."
+  (let ((arguments (split-string-and-unquote boot-arguments)))
+    (unless arguments
+      (user-error "Supply boot arguments, such as -kernel build/kernel.elf or -cdrom build/os.iso"))
+    arguments))
+
+;;;###autoload
+(defun qemu-x86_64-os-run (boot-arguments)
+  "Run an x86_64 OS in QEMU with serial console and monitor in an Emacs terminal."
+  (interactive
+   (list (read-string
+          "Boot arguments (-kernel build/kernel.elf, -cdrom build/os.iso, or -drive ...): ")))
+  (qemu--start-x86_64-os-terminal
+   (append qemu-x86_64-os-default-arguments
+           (qemu--x86_64-os-boot-arguments boot-arguments))))
+
+;;;###autoload
+(defun qemu-x86_64-os-debug (boot-arguments gdb-port)
+  "Run the x86_64 OS paused, with a QEMU GDB stub listening on GDB-PORT."
+  (interactive
+   (list (read-string
+          "Boot arguments (-kernel build/kernel.elf, -cdrom build/os.iso, or -drive ...): ")
+         (read-string "GDB TCP port: " "1234")))
+  (unless (and (string-match-p "\\`[0-9]+\\'" gdb-port)
+               (<= 1 (string-to-number gdb-port) 65535))
+    (user-error "GDB port must be a number between 1 and 65535"))
+  (qemu--start-x86_64-os-terminal
+   (append qemu-x86_64-os-default-arguments
+           (qemu--x86_64-os-boot-arguments boot-arguments)
+           (list "-S" "-gdb" (format "tcp::%s" gdb-port)))))
 
 ;; ── LaTeX (AUCTeX) ────────────────────────────────────────────────────────
 (use-package auctex

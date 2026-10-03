@@ -318,12 +318,29 @@ The helper bindings use `build/`; for preset-based projects, run the project's
 
 ## QEMU emulation and debugging
 
-Use `SPC e r` to choose an installed QEMU system or user-mode emulator and enter
-its arguments. The command runs in an Emacs compilation buffer. For terminal
-guests, `-nographic` or `-serial stdio` avoids requiring a graphical display.
-For GDB remote debugging, start a system emulator with `-S -gdb tcp::1234`,
-then connect GDB to `:1234` using `M-x gdb`. Choose a GDB build matching the
-guest architecture for cross-architecture targets.
+For x86_64 OS development, use the dedicated system-emulator commands:
+
+| Key | Action |
+|-----|--------|
+| `SPC e x` | Run an x86_64 guest interactively |
+| `SPC e d` | Start the guest paused with a GDB server |
+| `SPC e r` | Choose any installed QEMU emulator and enter its arguments |
+
+The x86_64 profile uses Q35, one CPU, 256 MiB RAM, no graphical display, and a
+serial console multiplexed with the QEMU monitor in an interactive Emacs
+terminal. Enter boot arguments each time; examples are `-kernel
+build/kernel.elf` for a QEMU-supported Multiboot kernel, `-cdrom build/os.iso`
+for bootable media, or `-drive file=build/os.img,format=raw` for a disk image.
+Add `-bios /path/to/OVMF.fd` when using UEFI firmware. The guest's keyboard and
+serial output/input are available in the terminal; `C-a c` switches between the
+serial console and QEMU monitor, and `C-a x` exits QEMU. This headless profile
+does not display a graphical guest screen.
+
+`SPC e d` adds `-S -gdb tcp::1234`, so the virtual CPU waits for a debugger.
+Open `M-x gdb` in another Emacs buffer and connect with, for example,
+`gdb -ex "target remote :1234" build/kernel.elf`. Use the unstripped ELF file
+for symbols even when booting from an ISO or disk. The GDB server port can be
+changed when starting the profile.
 
 ## User preferences
 
