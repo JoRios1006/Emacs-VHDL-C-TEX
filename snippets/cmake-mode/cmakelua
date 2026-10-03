@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Link Lua 5.2 into a CMake target
+# key: cmakelua
+# --
+find_package(Lua 5.2 REQUIRED)
+target_include_directories(${1:my_target} PRIVATE \${LUA_INCLUDE_DIR})
+target_link_libraries(${1:my_target} PRIVATE \${LUA_LIBRARIES})
+$0

@@ -1,5 +1,10 @@
 {pkgs}: {
   deps = [
+    pkgs.gdb
+    pkgs.qemu
+    pkgs.ninja
+    pkgs.cmake-format
+    pkgs.cmake-language-server
     pkgs.luaPackages.busted
     pkgs.lua-language-server
     pkgs.pkg-config

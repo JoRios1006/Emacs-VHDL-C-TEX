@@ -1,6 +1,7 @@
-# Emacs VHDL / C / Lua / LaTeX Environment
+# Emacs VHDL / C / Lua / CMake / QEMU / LaTeX Environment
 
-A complete Emacs configuration for VHDL, C, and Lua development with LaTeX support, running on Replit.
+A complete Emacs configuration for VHDL, C/C++, Lua, CMake, and LaTeX
+development with QEMU tools, running on Replit.
 
 ## How to run
 
@@ -32,6 +33,8 @@ All major commands are behind `SPC` in Normal mode.
 | `SPC p` | Projectile (projects) |
 | `SPC g` | Magit (git) |
 | `SPC l` | LSP (go-to-def, rename, format…) |
+| `SPC c` | CMake configure/build/test/format |
+| `SPC e` | QEMU emulation |
 | `SPC u` | Lua scripting and Busted tests |
 | `SPC t` | Toggles (focus mode, line numbers…) |
 | `SPC z` | Code folding |
@@ -41,11 +44,17 @@ All major commands are behind `SPC` in Normal mode.
 ## Installed features
 
 - **Evil** — full Vim keybindings via `evil` + `evil-collection`
-- **LSP** — `lsp-mode` with `clangd` (C/C++), `vhdl_ls` (VHDL), and
-  LuaLS (Lua 5.2)
+- **LSP** — `lsp-mode` with `clangd` (C/C++), CMake Language Server,
+  `vhdl_ls` (VHDL), and LuaLS (Lua 5.2)
 - **Lua** — `lua-mode`, LuaLS completion/diagnostics, script execution, and
-  Busted file/project test commands
-- **C / C++** — `cc-mode`, clangd LSP, cmake-mode
+  Busted file/project test commands; Lua 5.2 C API headers and libraries for
+  embedding in C/C++
+- **C / C++** — `cc-mode`, clangd LSP with CMake compile-database support,
+  `cmake-mode`
+- **CMake** — language-server completion, formatting, configure/build/test/
+  clean commands, and Ninja generator support
+- **QEMU** — system and user-mode emulators, a prompted Emacs launcher, and
+  GDB for remote debugging
 - **SDL3 / C** — SDL3 lifecycle, event loop, rendering, input, textures,
   timing, logging, and asset snippets; SDL3-aware Makefile templates
 - **Raylib / C** — Raylib window lifecycle, drawing, input, textures, cameras,
@@ -71,7 +80,9 @@ All major commands are behind `SPC` in Normal mode.
 ## System dependencies (installed via Nix)
 
 - `emacs` (30.x)
-- `gcc`, `clang-tools` (clangd), `cmake`, `gnumake`
+- `gcc`, `clang-tools` (clangd), `cmake`, `cmake-language-server`,
+  `cmake-format`, `ninja`, `gnumake`
+- `qemu`, `gdb` — system/user-mode emulation and remote debugging
 - `ghdl` — VHDL simulator (for FPGA/simulation workflows)
 - `raylib`, `pkg-config` — Raylib C development and Makefile discovery
 - Lua 5.2 (Replit Lua Tools module), `lua-language-server`, and `busted` —
@@ -261,6 +272,58 @@ Busted; missing executables are reported explicitly by the run commands.
 Test commands use Emacs compilation buffers. Busted discovers the suite using
 its standard project conventions; use a `.busted` file or Git root to mark the
 project directory.
+
+### Embedding Lua in C/C++
+
+The Lua 5.2 module supplies `lua.h`, `lua.hpp`, the Lua libraries, and the
+`lua5.2` pkg-config entry. In a CMake target, type `cmakelua` and press `TAB`
+to insert:
+
+```cmake
+find_package(Lua 5.2 REQUIRED)
+target_include_directories(my_target PRIVATE ${LUA_INCLUDE_DIR})
+target_link_libraries(my_target PRIVATE ${LUA_LIBRARIES})
+```
+
+In a C or C++ buffer, `luaembed` inserts a runnable host example that creates a
+Lua state, registers a `host_log` function, executes `script.lua`, reports Lua
+errors, and closes the state. The C++ example includes `lua.hpp`.
+
+`SPC c c` configures the project in `build/` and exports
+`compile_commands.json`; clangd uses that database to find Lua headers and
+target flags. It prompts for optional extra CMake arguments, such as
+`-DCMAKE_TOOLCHAIN_FILE=cmake/aarch64-toolchain.cmake` for a cross-compiled
+QEMU guest. The commands assume the standard `build/` directory, configurable
+through `my-cmake-build-directory`. The sample calls `luaL_openlibs`, which
+opens Lua's standard libraries; restrict libraries explicitly when loading
+untrusted scripts.
+
+## CMake tools
+
+CMake buffers use `cmake-mode` and the CMake Language Server. CMake commands
+run in compilation buffers, so build and test output is navigable:
+
+| Key | Action |
+|-----|--------|
+| `SPC c c` | Configure in `build/`, Debug mode, export compile commands |
+| `SPC c b` | Build with CMake |
+| `SPC c t` | Run CTest with failure output |
+| `SPC c f` | Format the current CMake buffer |
+| `SPC c x` | Clean compiled outputs |
+
+`ninja` is installed for projects that select it as their CMake generator.
+The helper bindings use `build/`; for preset-based projects, run the project's
+`cmake --preset`, `cmake --build --preset`, and `ctest --preset` commands with
+`M-x compile` so their configured binary directories are respected.
+
+## QEMU emulation and debugging
+
+Use `SPC e r` to choose an installed QEMU system or user-mode emulator and enter
+its arguments. The command runs in an Emacs compilation buffer. For terminal
+guests, `-nographic` or `-serial stdio` avoids requiring a graphical display.
+For GDB remote debugging, start a system emulator with `-S -gdb tcp::1234`,
+then connect GDB to `:1234` using `M-x gdb`. Choose a GDB build matching the
+guest architecture for cross-architecture targets.
 
 ## User preferences
 

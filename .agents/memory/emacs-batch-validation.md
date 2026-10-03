@@ -19,3 +19,13 @@ archive entry. For commands that invoke `compile`, inspect the buffer returned
 by the command; repeated compile calls can reuse or rename compilation buffers,
 so a fixed `*compilation*` lookup can read stale output. Do not print secret
 values while testing API-backed packages.
+
+Run `check-parens` on `init.el` after structural Lisp edits and before loading
+the full configuration. A load-time end-of-file error does not identify the
+unmatched form as precisely.
+
+**Why:** A batch load reported only end-of-file; a separate parenthesis check
+located the unmatched opening form.
+
+**How to apply:** Include `check-parens` in the batch validation pass before
+loading `early-init.el` and `init.el`.

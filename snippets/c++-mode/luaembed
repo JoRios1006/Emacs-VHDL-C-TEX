@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+# name: Embed Lua 5.2 in C++
+# key: luaembed
+# --
+#include <lua.hpp>
+
+#include <cstdlib>
+#include <iostream>
+
+static int l_host_log(lua_State *L)
+{
+    const char *message = luaL_checkstring(L, 1);
+    std::cout << message << '\n';
+    return 0;
+}
+
+int main()
+{
+    lua_State *L = luaL_newstate();
+    if (L == nullptr) {
+        std::cerr << "Could not create Lua state\n";
+        return EXIT_FAILURE;
+    }
+
+    luaL_openlibs(L);
+    lua_register(L, "host_log", l_host_log);
+    if (luaL_dofile(L, "${1:script.lua}") != LUA_OK) {
+        std::cerr << "Lua error: " << lua_tostring(L, -1) << '\n';
+        lua_close(L);
+        return EXIT_FAILURE;
+    }
+
+    lua_close(L);
+    return EXIT_SUCCESS;
+}

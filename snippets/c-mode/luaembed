@@ -1,0 +1,37 @@
+# -*- mode: snippet -*-
+# name: Embed Lua 5.2 in C
+# key: luaembed
+# --
+#include <lauxlib.h>
+#include <lua.h>
+#include <lualib.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+
+static int l_host_log(lua_State *L)
+{
+    const char *message = luaL_checkstring(L, 1);
+    puts(message);
+    return 0;
+}
+
+int main(void)
+{
+    lua_State *L = luaL_newstate();
+    if (L == NULL) {
+        fputs("Could not create Lua state\n", stderr);
+        return EXIT_FAILURE;
+    }
+
+    luaL_openlibs(L);
+    lua_register(L, "host_log", l_host_log);
+    if (luaL_dofile(L, "${1:script.lua}") != LUA_OK) {
+        fprintf(stderr, "Lua error: %s\n", lua_tostring(L, -1));
+        lua_close(L);
+        return EXIT_FAILURE;
+    }
+
+    lua_close(L);
+    return EXIT_SUCCESS;
+}

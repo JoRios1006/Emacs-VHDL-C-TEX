@@ -1,8 +1,8 @@
 ;;; init.el --- Main Emacs configuration -*- lexical-binding: t -*-
 ;;; Commentary:
-;; A complete Emacs environment for VHDL, C, and LaTeX development.
-;; Features: Evil (Vim keys), LSP, VHDL, C/clangd, AUCTeX, Flycheck,
-;;           Snippets, Magit, Projectile, Company, Doom theme, Focus mode.
+;; A complete Emacs environment for VHDL, C/C++, Lua, CMake, and LaTeX.
+;; Features: Evil (Vim keys), LSP, Lua embedding/testing, CMake, QEMU,
+;;           VHDL, C/clangd, AUCTeX, Flycheck, snippets, Magit, Projectile.
 
 ;;; Code:
 
@@ -235,6 +235,18 @@
     "rc" '(ray-check                   :which-key "syntax check")
     "rx" '(ray-clean                   :which-key "clean")
 
+    ;; CMake
+    "c"  '(:ignore t :which-key "CMake")
+    "cc" '(cmake-configure              :which-key "configure")
+    "cb" '(cmake-build                  :which-key "build")
+    "ct" '(cmake-test                   :which-key "run tests")
+    "cf" '(cmake-format-buffer          :which-key "format CMake")
+    "cx" '(cmake-clean                  :which-key "clean")
+
+    ;; QEMU
+    "e"  '(:ignore t :which-key "emulation")
+    "er" '(qemu-run                     :which-key "run QEMU")
+
     ;; Lua scripting and Busted tests
     "u"  '(:ignore t :which-key "Lua")
     "uf" '(lua-run-file                :which-key "run current file")
@@ -465,7 +477,10 @@
   (lsp-enable-snippet               t)
   ;; Performance
   (lsp-enable-file-watchers         nil)
-  (read-process-output-max          (* 1024 1024)))
+  (read-process-output-max          (* 1024 1024))
+  ;; The CMake helpers generate this database for clangd, including Lua headers.
+  (lsp-clients-clangd-args
+   '("--header-insertion-decorators=0" "--compile-commands-dir=build")))
 
 (use-package lsp-ui
   :after lsp-mode
@@ -507,7 +522,16 @@
 
 (use-package cmake-mode
   :mode (("CMakeLists\\.txt\\'" . cmake-mode)
-         ("\\.cmake\\'"         . cmake-mode)))
+         ("\\.cmake\\'"         . cmake-mode))
+  :hook (cmake-mode . lsp-deferred))
+
+(use-package lsp-cmake
+  :ensure nil
+  :after lsp-mode
+  :custom
+  (lsp-cmake-server-command
+   (or (executable-find "cmake-language-server")
+       "cmake-language-server")))
 
 ;; ── VHDL ───────────────────────────────────────────────────────────────────
 (use-package vhdl-mode
@@ -735,6 +759,113 @@ Signal a user error when none can be found."
   "Remove Raylib project build artifacts."
   (interactive)
   (ray--make "clean"))
+
+;; ── CMake helpers ─────────────────────────────────────────────────────────
+;; Configure with a compile database so clangd can resolve CMake targets and
+;; native dependencies such as the Lua 5.2 C API.
+(defvar my-cmake-build-directory "build"
+  "Build directory used by the CMake helper commands.")
+
+(defun my-cmake--project-directory ()
+  "Find the nearest CMake project root."
+  (or (locate-dominating-file default-directory "CMakeLists.txt")
+      (locate-dominating-file default-directory "CMakePresets.json")
+      (user-error "No CMakeLists.txt or CMakePresets.json found above %s"
+                  default-directory)))
+
+;;;###autoload
+(defun cmake-configure (extra-arguments)
+  "Configure the current CMake project, export compile commands, and accept extra flags."
+  (interactive (list (read-string "Additional CMake arguments: ")))
+  (let ((default-directory (my-cmake--project-directory)))
+    (compile
+     (format "cmake -S . -B %s -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON %s"
+             (shell-quote-argument my-cmake-build-directory)
+             extra-arguments))))
+
+;;;###autoload
+(defun cmake-build ()
+  "Build the current CMake project."
+  (interactive)
+  (let ((default-directory (my-cmake--project-directory)))
+    (compile
+     (format "cmake --build %s --parallel"
+             (shell-quote-argument my-cmake-build-directory)))))
+
+;;;###autoload
+(defun cmake-test ()
+  "Run CTest for the current CMake project's build directory."
+  (interactive)
+  (let ((default-directory (my-cmake--project-directory)))
+    (compile
+     (format "ctest --test-dir %s --output-on-failure"
+             (shell-quote-argument my-cmake-build-directory)))))
+
+;;;###autoload
+(defun cmake-clean ()
+  "Remove compiled outputs from the current CMake build directory."
+  (interactive)
+  (let ((default-directory (my-cmake--project-directory)))
+    (compile
+     (format "cmake --build %s --target clean"
+             (shell-quote-argument my-cmake-build-directory)))))
+
+;;;###autoload
+(defun cmake-format-buffer ()
+  "Format the current CMake buffer with cmake-format."
+  (interactive)
+  (unless (executable-find "cmake-format")
+    (user-error "cmake-format is not installed or not on PATH"))
+  (let* ((source (current-buffer))
+         (formatted
+          (with-temp-buffer
+            (insert-buffer-substring source)
+            (let ((status (call-process-region
+                           (point-min) (point-max)
+                           "cmake-format" t t nil "-")))
+              (unless (and (integerp status) (zerop status))
+                (user-error "cmake-format failed (status %s)" status)))
+            (buffer-string))))
+    (unless (string= formatted (buffer-string))
+      (let ((inhibit-read-only t))
+        (erase-buffer)
+        (insert formatted))
+      (set-buffer-modified-p t))))
+
+;; ── QEMU helper ────────────────────────────────────────────────────────────
+(defun qemu--available-emulators ()
+  "Return QEMU system and user-mode emulator commands on PATH."
+  (let (emulators)
+    (dolist (directory exec-path)
+      (when (file-directory-p directory)
+        (dolist (path (directory-files
+                       directory t "\\`qemu-[[:alnum:]_.-]+\\'"))
+          (let ((name (file-name-nondirectory path)))
+            (when (and (file-executable-p path)
+                       (or (string-prefix-p "qemu-system-" name)
+                           (and (string-prefix-p "qemu-" name)
+                                (not (string-match-p
+                                      "\\`qemu-\\(?:img\\|io\\|nbd\\|storage-daemon\\|ga\\|pr-helper\\|keymap\\|edid\\|bridge\\|vmsr-helper\\)\\'"
+                                      name)))))
+              (push name emulators))))))
+    (sort (delete-dups emulators) #'string-lessp)))
+
+;;;###autoload
+(defun qemu-run ()
+  "Select a QEMU emulator, enter its arguments, and run it in a compilation buffer."
+  (interactive)
+  (let* ((emulators (qemu--available-emulators))
+         (emulator (if emulators
+                       (completing-read "QEMU emulator: " emulators nil t)
+                     (user-error "No QEMU emulator is available on PATH")))
+         (arguments (read-string "QEMU arguments: "))
+         (executable (or (executable-find emulator)
+                         (user-error "%s is not available on PATH" emulator))))
+    (when (string-empty-p (string-trim arguments))
+      (user-error "Enter QEMU arguments, such as -nographic or -kernel <image>"))
+    (compile (format "%s %s"
+                     (shell-quote-argument executable)
+                     arguments))))
 
 ;; ── LaTeX (AUCTeX) ────────────────────────────────────────────────────────
 (use-package auctex
