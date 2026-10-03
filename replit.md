@@ -1,6 +1,6 @@
-# Emacs VHDL / C / LaTeX Environment
+# Emacs VHDL / C / Lua / LaTeX Environment
 
-A complete Emacs configuration for VHDL and C development with LaTeX support, running on Replit.
+A complete Emacs configuration for VHDL, C, and Lua development with LaTeX support, running on Replit.
 
 ## How to run
 
@@ -32,6 +32,7 @@ All major commands are behind `SPC` in Normal mode.
 | `SPC p` | Projectile (projects) |
 | `SPC g` | Magit (git) |
 | `SPC l` | LSP (go-to-def, rename, format…) |
+| `SPC u` | Lua scripting and Busted tests |
 | `SPC t` | Toggles (focus mode, line numbers…) |
 | `SPC z` | Code folding |
 | `SPC h` | Help |
@@ -40,7 +41,10 @@ All major commands are behind `SPC` in Normal mode.
 ## Installed features
 
 - **Evil** — full Vim keybindings via `evil` + `evil-collection`
-- **LSP** — `lsp-mode` with `clangd` (C/C++) and `vhdl_ls` (VHDL)
+- **LSP** — `lsp-mode` with `clangd` (C/C++), `vhdl_ls` (VHDL), and
+  LuaLS (Lua 5.2)
+- **Lua** — `lua-mode`, LuaLS completion/diagnostics, script execution, and
+  Busted file/project test commands
 - **C / C++** — `cc-mode`, clangd LSP, cmake-mode
 - **SDL3 / C** — SDL3 lifecycle, event loop, rendering, input, textures,
   timing, logging, and asset snippets; SDL3-aware Makefile templates
@@ -70,6 +74,8 @@ All major commands are behind `SPC` in Normal mode.
 - `gcc`, `clang-tools` (clangd), `cmake`, `gnumake`
 - `ghdl` — VHDL simulator (for FPGA/simulation workflows)
 - `raylib`, `pkg-config` — Raylib C development and Makefile discovery
+- Lua 5.2 (Replit Lua Tools module), `lua-language-server`, and `busted` —
+  Lua scripting and tests
 - `ripgrep`, `fd`, `ispell`
 
 ## SDL3 projects
@@ -240,10 +246,26 @@ via Nix as the `vhdl_ls` binary, and pins it explicitly in `init.el`:
 Opening a `.vhd`/`.vhdl` file should show `LSP[vhdl-ls]` in the modeline with
 diagnostics, go-to-definition, and find-references working immediately.
 
+## Lua scripting and tests
+
+Lua buffers use `lua-mode` with the bundled `lsp-mode` LuaLS client, configured
+for the installed Lua 5.2 runtime. The project provides `lua`, LuaLS, and
+Busted; missing executables are reported explicitly by the run commands.
+
+| Key | Action |
+|-----|--------|
+| `SPC u f` | Run the current Lua file |
+| `SPC u T` | Run the current file with Busted |
+| `SPC u t` | Run the project's Busted test suite |
+
+Test commands use Emacs compilation buffers. Busted discovers the suite using
+its standard project conventions; use a `.busted` file or Git root to mark the
+project directory.
+
 ## User preferences
 
 - Vim (Evil) keybindings everywhere
 - SPC as leader key
 - 4-space indentation, no tabs
 - Relative line numbers
-- Doom One colour theme
+- Doom Solarized High Contrast colour theme

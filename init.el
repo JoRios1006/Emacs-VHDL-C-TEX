@@ -235,6 +235,12 @@
     "rc" '(ray-check                   :which-key "syntax check")
     "rx" '(ray-clean                   :which-key "clean")
 
+    ;; Lua scripting and Busted tests
+    "u"  '(:ignore t :which-key "Lua")
+    "uf" '(lua-run-file                :which-key "run current file")
+    "uT" '(lua-test-file               :which-key "test current file")
+    "ut" '(lua-test-project            :which-key "test project")
+
     ;; Code folding
     "z"  '(:ignore t :which-key "folding")
     "za" '(my-fold-toggle               :which-key "toggle fold")
@@ -471,6 +477,21 @@
   (lsp-ui-sideline-show-hover   nil)
   (lsp-ui-peek-always-show      t))
 
+;; ── Lua scripting ─────────────────────────────────────────────────────────
+(use-package lua-mode
+  :mode ("\\.lua\\'" . lua-mode)
+  :interpreter ("lua" . lua-mode)
+  :hook (lua-mode . lsp-deferred))
+
+;; lsp-mode bundles a LuaLS client. Match the installed Lua runtime and keep
+;; LuaLS telemetry disabled; the server is provided by the project Nix deps.
+(use-package lsp-lua
+  :ensure nil
+  :after lsp-mode
+  :custom
+  (lsp-lua-runtime-version "Lua 5.2")
+  (lsp-lua-telemetry-enable nil))
+
 ;; ── C / C++ ────────────────────────────────────────────────────────────────
 (use-package cc-mode
   :ensure nil
@@ -580,6 +601,50 @@ Equivalent to: ghdl -a <file> && ghdl -e -o <entity> <entity> && ./<entity>"
   "Remove GHDL work-library artifacts from the current directory."
   (interactive)
   (compile "ghdl --remove"))
+
+;; ── Lua execution and Busted test helpers ─────────────────────────────────
+(defun lua--current-file ()
+  "Return the current Lua file or signal a user error."
+  (or (buffer-file-name)
+      (user-error "Buffer is not visiting a file")))
+
+(defun lua--required-executable (name)
+  "Return executable path for NAME, or report a clear setup error."
+  (or (executable-find name)
+      (user-error "%s is not installed or not on PATH" name)))
+
+(defun lua--project-directory ()
+  "Find the current project root for running Busted tests."
+  (or (locate-dominating-file default-directory ".busted")
+      (locate-dominating-file default-directory ".git")
+      (locate-dominating-file default-directory "Makefile")
+      default-directory))
+
+;;;###autoload
+(defun lua-run-file ()
+  "Run the current Lua file in a compilation buffer."
+  (interactive)
+  (compile (format "%s %s"
+                   (shell-quote-argument (lua--required-executable "lua"))
+                   (shell-quote-argument (lua--current-file)))))
+
+;;;###autoload
+(defun lua-test-file ()
+  "Run the current Lua test file with Busted."
+  (interactive)
+  (let ((default-directory (lua--project-directory)))
+    (compile (format "%s %s"
+                     (shell-quote-argument
+                      (lua--required-executable "busted"))
+                     (shell-quote-argument (lua--current-file))))))
+
+;;;###autoload
+(defun lua-test-project ()
+  "Run the project's Busted test suite."
+  (interactive)
+  (let ((default-directory (lua--project-directory)))
+    (compile (shell-quote-argument
+              (lua--required-executable "busted")))))
 
 ;; ── SDL3 build helpers ────────────────────────────────────────────────────
 ;; These use the Makefile in the nearest ancestor directory.  The SDL3

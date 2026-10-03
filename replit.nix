@@ -1,5 +1,7 @@
 {pkgs}: {
   deps = [
+    pkgs.luaPackages.busted
+    pkgs.lua-language-server
     pkgs.pkg-config
     pkgs.raylib
     pkgs.vhdl-ls

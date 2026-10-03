@@ -15,4 +15,7 @@ packages.
 
 **How to apply:** Use explicit init loading for smoke tests, and refresh the
 package archive only when a package install reports a missing tar or stale
-archive entry. Do not print secret values while testing API-backed packages.
+archive entry. For commands that invoke `compile`, inspect the buffer returned
+by the command; repeated compile calls can reuse or rename compilation buffers,
+so a fixed `*compilation*` lookup can read stale output. Do not print secret
+values while testing API-backed packages.
