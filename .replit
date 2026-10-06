@@ -1,4 +1,4 @@
-modules = ["lua-5.2"]
+modules = ["lua-5.2", "python-base-3.13"]
 [agent]
 expertMode = true
 

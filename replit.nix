@@ -1,5 +1,11 @@
 {pkgs}: {
   deps = [
+    pkgs.coccinelle
+    pkgs.sparse
+    pkgs.clang-analyzer
+    pkgs.semgrep
+    pkgs.flawfinder
+    pkgs.cppcheck
     pkgs.gdb
     pkgs.qemu
     pkgs.ninja
